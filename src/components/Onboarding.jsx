@@ -245,5 +245,3 @@ export default function Onboarding() {
     </div>
   );
 }
-EOF
-Write-Host "written"
