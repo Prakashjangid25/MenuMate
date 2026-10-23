@@ -12,10 +12,12 @@ import {
   FiPercent, 
   FiShoppingCart,
   FiShoppingBag,
-  FiUser
+  FiUser,
+  FiMessageSquare
 } from 'react-icons/fi';
 import { jsPDF } from 'jspdf';
-import { db } from '../firebase.js';
+import { db, storage } from '../firebase.js';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { 
   collection, 
   doc, 
@@ -76,6 +78,7 @@ export default function BillingSystem({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [cart, setCart] = useState([]);
+  const [customerPhone, setCustomerPhone] = useState('');
   
   // Modal states
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -259,8 +262,8 @@ export default function BillingSystem({
 
   const metrics = getPricingMetrics(cart);
 
-  // Trigger PDF Generation
-  const downloadPDFReceipt = async (billData) => {
+  // Build PDF document (shared by download & WhatsApp)
+  const buildReceiptPDF = async (billData) => {
     try {
       if (onShowStatus) {
         onShowStatus("Preparing PDF...");
@@ -422,13 +425,59 @@ export default function BillingSystem({
         doc.text("Powered by EasyDine", 105, y, { align: "center" });
       }
 
-      doc.save(`${billData.billNumber}.pdf`);
-      if (onShowStatus) {
-        onShowStatus("PDF Downloaded successfully!");
-      }
+      return doc;
     } catch (err) {
       console.error("PDF generation failed: ", err);
+      throw err;
+    }
+  };
+
+  const downloadPDFReceipt = async (billData) => {
+    try {
+      if (onShowStatus) onShowStatus("Preparing PDF...");
+      const doc = await buildReceiptPDF(billData);
+      doc.save(`${billData.billNumber}.pdf`);
+      if (onShowStatus) onShowStatus("PDF Downloaded successfully!");
+    } catch (err) {
       alert("Failed to generate PDF. Please check console for details.");
+    }
+  };
+
+  // Send bill to customer via WhatsApp (uploads PDF to Firebase Storage, opens wa.me)
+  const sendToWhatsApp = async (billData) => {
+    let phone = (customerPhone || '').replace(/\D/g, '');
+    if (!phone || phone.length < 10) {
+      const entered = prompt("Enter customer WhatsApp number (with country code, e.g. 919876543210):");
+      if (!entered) return;
+      phone = entered.replace(/\D/g, '');
+      if (!phone || phone.length < 10) {
+        alert("Invalid phone number.");
+        return;
+      }
+      setCustomerPhone(entered);
+    }
+    try {
+      if (onShowStatus) onShowStatus("Preparing bill for WhatsApp...");
+      const doc = await buildReceiptPDF(billData);
+      const blob = doc.output('blob');
+
+      if (onShowStatus) onShowStatus("Uploading bill...");
+      const fileRef = ref(storage, `bills/${currentRest.id}/${billData.billNumber}.pdf`);
+      await uploadBytes(fileRef, blob);
+      const url = await getDownloadURL(fileRef);
+
+      const msg = `Hello! Your bill from ${currentRest?.name || 'our restaurant'}:\n` +
+        `Bill No: ${billData.billNumber}\n` +
+        `Date: ${billData.date} ${billData.time}\n` +
+        `Total: Rs.${Number(billData.grandTotal).toFixed(2)}\n\n` +
+        `View/Download receipt: ${url}\n\n` +
+        `Thank you for dining with us!`;
+      const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+      if (onShowStatus) onShowStatus("WhatsApp opened with bill link.");
+    } catch (err) {
+      console.error("WhatsApp send failed:", err);
+      alert("Failed to send bill via WhatsApp. See console.");
     }
   };
 
@@ -1192,6 +1241,33 @@ export default function BillingSystem({
                   </button>
 
                   <button
+                    onClick={() => sendToWhatsApp({
+                      billNumber,
+                      orderType,
+                      tableNumber: selectedTableNumber,
+                      items: cart,
+                      subtotal: metrics.subtotal,
+                      discount: metrics.discount || 0,
+                      gstEnabled,
+                      gstRate: metrics.taxRate,
+                      gstAmount: metrics.gstAmount,
+                      serviceChargeEnabled,
+                      serviceChargeRate,
+                      serviceChargeAmount: metrics.serviceChargeAmount,
+                      grandTotal: metrics.grandTotal,
+                      date: new Date().toLocaleDateString('en-GB'),
+                      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                    })}
+                    className={`w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer border ${
+                      isDark
+                        ? 'border-green-800 bg-green-900/40 hover:bg-green-900/60 text-green-400'
+                        : 'border-green-200 bg-green-50 hover:bg-green-100 text-green-700'
+                    }`}
+                  >
+                    <FiMessageSquare /> Send to WhatsApp
+                  </button>
+
+                  <button
                     onClick={handleSaveBill}
                     disabled={isSaving || cart.length === 0 || (orderType === 'Table' && !selectedTableNumber)}
                     className="w-full py-3 bg-violet-500 hover:bg-violet-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-950 font-black rounded-xl text-xs tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
@@ -1880,6 +1956,31 @@ export function ReusableBillPreviewModal({
                 }`}
               >
                 <FiDownload /> Download PDF
+              </button>
+
+              <button
+                onClick={() => sendToWhatsApp({
+                  billNumber,
+                  orderType,
+                  tableNumber: selectedTableNumber,
+                  items,
+                  subtotal,
+                  discount: discount || 0,
+                  gstEnabled,
+                  gstRate: taxRate,
+                  gstAmount,
+                  serviceChargeEnabled,
+                  serviceChargeRate,
+                  serviceChargeAmount,
+                  grandTotal,
+                  date: new Date().toLocaleDateString('en-GB'),
+                  time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                })}
+                className={`w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer border ${
+                  isDark ? 'border-green-800 bg-green-900/40 hover:bg-green-900/60 text-green-400' : 'border-green-200 bg-green-50 hover:bg-green-100 text-green-700'
+                }`}
+              >
+                <FiMessageSquare /> Send to WhatsApp
               </button>
 
               <button
