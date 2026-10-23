@@ -52,6 +52,24 @@ export default function CustomerMenu() {
   const [placedOrder, setPlacedOrder] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // YouPI PG (self-hosted UPI gateway) config
+  const youpiGatewayUrl = import.meta.env.VITE_YOUPI_GATEWAY_URL;
+  const youpiPublicKey = import.meta.env.VITE_YOUPI_PUBLIC_KEY;
+  const youpiEnabled = !!(youpiGatewayUrl && youpiPublicKey);
+
+  // Inject YouPI universal script when configured
+  useEffect(() => {
+    if (!youpiEnabled) return;
+    if (document.getElementById('youpi-pg-script')) return;
+    const s = document.createElement('script');
+    s.id = 'youpi-pg-script';
+    s.src = youpiGatewayUrl.replace(/\/$/, '') + '/youpi.js';
+    s.setAttribute('data-youpi-key', youpiPublicKey);
+    s.setAttribute('data-currency', 'INR');
+    s.async = true;
+    document.head.appendChild(s);
+  }, [youpiEnabled, youpiGatewayUrl, youpiPublicKey]);
+
   // Product Detail Modal State
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -179,6 +197,45 @@ export default function CustomerMenu() {
       createdAt: new Date().toISOString()
     };
 
+    const orderId = orderRecord.id;
+
+    // YouPI PG (self-hosted UPI gateway) checkout when configured
+    if (youpiEnabled && typeof window !== 'undefined' && window.Youpi) {
+      setLoading(true);
+      window.Youpi.pay({
+        order_id: orderId,
+        amount: total,
+        currency: 'INR',
+        name: restaurant.name,
+        description: `Order ${orderId}`,
+        handler: async function (response) {
+          try {
+            const paidOrder = {
+              ...orderRecord,
+              status: 'accepted',
+              paymentStatus: 'paid',
+              utr: response && response.utr,
+              paymentId: response && response.paymentId
+            };
+            await createOrder(restaurant.id, paidOrder);
+            setPlacedOrder(paidOrder);
+            setCart([]);
+            setShowCart(false);
+          } catch (error) {
+            console.error('Order save failed after payment:', error);
+            alert('Payment received but order save failed. Please contact staff with UTR: ' + (response && response.utr));
+          } finally {
+            setLoading(false);
+          }
+        },
+        onClose: function () {
+          setLoading(false);
+        }
+      });
+      return;
+    }
+
+    // Fallback: direct order (no gateway configured)
     setLoading(true);
     try {
       await createOrder(restaurant.id, orderRecord);
