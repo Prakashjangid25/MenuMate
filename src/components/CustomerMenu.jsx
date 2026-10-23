@@ -415,7 +415,7 @@ export default function CustomerMenu() {
       {cart.length > 0 && (
         <button 
           onClick={() => setShowCart(true)}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[360px] bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white font-bold py-3 px-5 rounded-2xl shadow-2xl flex justify-between items-center z-40 transition-all scale-105"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-[360px] btn-primary py-3 px-5 rounded-2xl shadow-2xl flex justify-between items-center z-40 transition-all scale-105 backdrop-blur"
         >
           <div className="flex items-center gap-2.5">
             <div className="w-6 h-6 rounded-lg bg-fuchsia-400 text-slate-950 font-bold text-xs flex items-center justify-center font-mono">
@@ -480,7 +480,7 @@ export default function CustomerMenu() {
                 <div 
                   key={prod.id} 
                   onClick={() => setSelectedProduct(prod)}
-                  className="bg-white rounded-2xl border border-slate-200/80 p-3 shadow-sm flex flex-col justify-between shrink-0 w-44 hover:shadow-md transition-shadow cursor-pointer"
+                  className="premium-card p-3 flex flex-col justify-between shrink-0 w-44 cursor-pointer"
                 >
                   <img 
                     src={prod.imageUrl} 
@@ -526,7 +526,7 @@ export default function CustomerMenu() {
                 <div 
                   key={prod.id}
                   onClick={() => setSelectedProduct(prod)}
-                  className="p-3 bg-white rounded-2xl border border-slate-200/80 hover:border-slate-300 shadow-sm flex gap-4 items-center justify-between transition-all cursor-pointer relative"
+                  className="premium-card p-3 flex gap-4 items-center justify-between cursor-pointer relative"
                 >
                   <img 
                     src={prod.imageUrl} 
@@ -718,7 +718,7 @@ export default function CustomerMenu() {
               <button 
                 onClick={handleCheckout}
                 disabled={loading}
-                className="w-full py-3 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white font-bold text-sm rounded-xl shadow-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full py-3 btn-primary disabled:opacity-50 text-white font-bold text-sm rounded-xl shadow-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 {loading ? (
                   <span>Processing Checkout...</span>
