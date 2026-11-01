@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import LandingPage from './components/LandingPage.jsx';
 import Onboarding from './components/Onboarding.jsx';
 import SuperAdmin from './components/SuperAdmin.jsx';
 import RestaurantAdmin from './components/RestaurantAdmin.jsx';
@@ -16,13 +17,14 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Onboarding />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/super-admin" element={<SuperAdmin />} />
       <Route path="/admin" element={<RestaurantAdmin />} />
       <Route path="/kitchen" element={<KitchenPanel />} />
       <Route path="/customer" element={<CustomerMenu />} />
       <Route path="/support" element={<SupportCenter />} />
-      <Route path="*" element={<Onboarding />} />
+      <Route path="*" element={<LandingPage />} />
     </Routes>
   );
 }
