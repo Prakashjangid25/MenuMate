@@ -35,95 +35,103 @@ export default function LandingPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Navbar
+      // Navbar - subtle entry
       gsap.from('.nav-item', {
-        y: -30,
+        y: -10,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.08
+        duration: 0.6,
+        ease: 'power2.out',
+        stagger: 0.05
       });
 
-      // Hero timeline
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-
-      tl.from('.hero-kicker', {
-        y: 40,
+      // Hero - instant visible, subtle animation
+      gsap.from('.hero-kicker', {
+        y: 10,
         opacity: 0,
-        duration: 1.2
-      })
-        .from('.hero-title-line', {
-          y: 60,
-          opacity: 0,
-          duration: 1.2,
-          stagger: 0.15
-        }, '-=0.8')
-        .from('.hero-subtitle', {
-          y: 40,
-          opacity: 0,
-          duration: 1
-        }, '-=0.6')
-        .from('.hero-cta-group', {
-          y: 40,
-          opacity: 0,
-          duration: 0.9,
-          stagger: 0.2
-        }, '-=0.4')
-        .from('.hero-stats', {
-          y: 40,
-          opacity: 0,
-          duration: 0.9
-        }, '-=0.3')
-        .from('.iphone-wrap', {
-          y: 50,
-          opacity: 0,
-          duration: 1.4,
-          ease: 'power3.out'
-        }, '-=0.8');
+        duration: 0.6,
+        ease: 'power2.out'
+      });
+
+      gsap.from('.hero-title-line', {
+        y: 10,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out'
+      });
+
+      gsap.from('.hero-subtitle', {
+        y: 10,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+      });
+
+      gsap.from('.hero-cta-group', {
+        y: 10,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power2.out'
+      });
+
+      gsap.from('.hero-stats', {
+        y: 10,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.out'
+      });
+
+      gsap.from('.iphone-wrap', {
+        y: 10,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out'
+      });
 
       // Floating orbs
       gsap.to('.orb-1', {
-        y: -20,
-        x: 10,
-        rotation: 3,
-        duration: 6,
+        y: -15,
+        x: 8,
+        rotation: 2,
+        duration: 5,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut'
       });
 
       gsap.to('.orb-2', {
-        y: 20,
-        x: -15,
-        rotation: -3,
-        duration: 7,
+        y: 15,
+        x: -12,
+        rotation: -2,
+        duration: 6,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: 0.5
+      });
+
+      gsap.to('.orb-3', {
+        y: -12,
+        x: 15,
+        rotation: 3,
+        duration: 4.5,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
         delay: 1
       });
 
-      gsap.to('.orb-3', {
-        y: -15,
-        x: 20,
-        rotation: 5,
-        duration: 5.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: 2
-      });
-
       // Reveal sections
       gsap.utils.toArray('.reveal').forEach((section) => {
         gsap.from(section, {
           opacity: 0,
-          y: 50,
-          duration: 1.2,
-          ease: 'power3.out',
+          y: 30,
+          duration: 0.8,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 80%',
+            start: 'top 82%',
             toggleActions: 'play none none none'
           }
         });
@@ -132,16 +140,16 @@ export default function LandingPage() {
       // Feature cards
       gsap.utils.toArray('.feat-card').forEach((card, i) => {
         gsap.from(card, {
-          y: 50,
+          y: 30,
           opacity: 0,
-          duration: 0.9,
-          ease: 'power3.out',
+          duration: 0.7,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: card,
-            start: 'top 85%',
+            start: 'top 88%',
             toggleActions: 'play none none none'
           },
-          delay: i * 0.1
+          delay: i * 0.05
         });
       });
 
@@ -152,12 +160,12 @@ export default function LandingPage() {
           { innerText: 0 },
           {
             innerText: target,
-            duration: 2.5,
+            duration: 2,
             ease: 'power2.out',
             snap: { innerText: 1 },
             scrollTrigger: {
               trigger: el,
-              start: 'top 85%',
+              start: 'top 88%',
               toggleActions: 'play none none none'
             }
           }
@@ -167,13 +175,13 @@ export default function LandingPage() {
       // Steps
       gsap.utils.toArray('.step-item').forEach((step, i) => {
         gsap.from(step, {
-          x: i % 2 === 0 ? -50 : 50,
+          x: i % 2 === 0 ? -30 : 30,
           opacity: 0,
-          duration: 0.9,
-          ease: 'power3.out',
+          duration: 0.7,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: step,
-            start: 'top 82%',
+            start: 'top 85%',
             toggleActions: 'play none none none'
           }
         });
@@ -182,23 +190,23 @@ export default function LandingPage() {
       // Pricing cards
       gsap.utils.toArray('.price-card').forEach((card, i) => {
         gsap.from(card, {
-          y: 60,
+          y: 30,
           opacity: 0,
-          duration: 1,
-          ease: 'power3.out',
+          duration: 0.7,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: card,
-            start: 'top 85%',
+            start: 'top 88%',
             toggleActions: 'play none none none'
           },
-          delay: i * 0.15
+          delay: i * 0.1
         });
       });
 
       // Parallax
       gsap.utils.toArray('.parallax-bg').forEach((el) => {
         gsap.to(el, {
-          yPercent: -20,
+          yPercent: -15,
           ease: 'none',
           scrollTrigger: {
             trigger: el.parentElement,
@@ -424,7 +432,7 @@ export default function LandingPage() {
           backgroundSize: '80px 80px'
         }} />
 
-        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left Content */}
           <div className="flex flex-col justify-center max-w-[560px]">
             <div className="hero-kicker inline-flex items-center gap-2 px-5 py-2 rounded-full bg-violet-500/[0.08] border border-violet-500/[0.2] text-violet-400 text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-sm">
@@ -476,20 +484,28 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right - iPhone Mockup (Fixed dimensions, no overflow) */}
+          {/* Right - Realistic iPhone Mockup with Dynamic Island */}
           <div className="relative flex items-center justify-center hidden lg:block">
             {/* Shadow */}
-            <div className="absolute inset-0 w-full h-full bg-black/50 blur-[80px] rounded-[3rem] opacity-50 animate-pulse" style={{ animationDuration: '4s' }} />
+            <div className="absolute inset-0 w-full h-full bg-black/60 blur-[80px] rounded-[3rem] opacity-50 animate-pulse" style={{ animationDuration: '4s' }} />
 
             {/* iPhone Frame - Fixed size */}
             <div className="iphone-wrap relative inline-block z-10">
-              <div className="relative w-[290px] h-[640px] rounded-[3rem] border-[4px] border-white/10 bg-gradient-to-b from-slate-950 to-black shadow-2xl shadow-violet-500/20 overflow-hidden">
-                {/* Top bar */}
-                <div className="absolute top-0 left-0 right-0 h-6 bg-black z-20" />
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-full z-30" />
+              <div className="relative w-[290px] h-[640px] rounded-[3.5rem] border-[4px] border-white/10 bg-black shadow-2xl shadow-violet-500/20 overflow-hidden">
+                {/* Dynamic Island Area */}
+                <div className="absolute top-0 left-0 right-0 h-[56px] bg-black z-30">
+                  {/* Dynamic Island Pill */}
+                  <div className="absolute top-[12px] left-1/2 -translate-x-1/2 w-[135px] h-[36px] bg-[#1a1a1a] border border-white/10 rounded-full flex items-center justify-center gap-2 shadow-xl z-10">
+                    <div className="w-2 h-2 rounded-full bg-white/40" />
+                    <div className="w-2 h-2 rounded-full bg-white/40" />
+                    <div className="w-3 h-3 rounded-full bg-white/30" />
+                  </div>
+                  {/* Top bezel speaker grill */}
+                  <div className="absolute top-[8px] left-[calc(50%-85px)] w-[170px] h-[1px] bg-white/10 rounded-full" />
+                </div>
 
-                {/* Status bar */}
-                <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-20 pointer-events-none">
+                {/* Status Bar */}
+                <div className="absolute top-[24px] left-6 right-6 flex justify-between items-center z-20 pointer-events-none">
                   <div className="flex gap-1 text-[10px] text-slate-400">
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '200ms' }} />
@@ -503,8 +519,8 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Screen content - fixed height with overflow hidden */}
-                <div className="absolute inset-0 p-5 pt-16 overflow-hidden flex flex-col w-full h-full">
+                {/* Screen content */}
+                <div className="absolute inset-0 p-5 pt-[70px] overflow-hidden flex flex-col w-full h-full">
                   <div className="flex items-start justify-between mb-4">
                     <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20">
                       <Layout className="text-white text-sm" />
@@ -647,7 +663,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 overflow-hidden">
           <div className="parallax-bg absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/10 via-transparent to-transparent" />
         </div>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="flex flex-col justify-center max-w-[560px]">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/[0.1] border border-emerald-500/[0.2] text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6">
               <ShoppingBag className="w-3 h-3" />
