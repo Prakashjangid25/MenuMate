@@ -35,7 +35,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ── Navbar ──
+      // Navbar
       gsap.from('.nav-item', {
         y: -30,
         opacity: 0,
@@ -44,7 +44,7 @@ export default function LandingPage() {
         stagger: 0.08
       });
 
-      // ── Hero ──
+      // Hero timeline
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
       tl.from('.hero-kicker', {
@@ -74,15 +74,15 @@ export default function LandingPage() {
           opacity: 0,
           duration: 0.9
         }, '-=0.3')
-        .from('.iphone-mockup', {
-          y: 60,
+        .from('.iphone-wrap', {
+          y: 50,
           opacity: 0,
           duration: 1.4,
           ease: 'power3.out'
         }, '-=0.8');
 
-      // Floating elements
-      gsap.to('.float-1', {
+      // Floating orbs
+      gsap.to('.orb-1', {
         y: -20,
         x: 10,
         rotation: 3,
@@ -92,7 +92,7 @@ export default function LandingPage() {
         ease: 'sine.inOut'
       });
 
-      gsap.to('.float-2', {
+      gsap.to('.orb-2', {
         y: 20,
         x: -15,
         rotation: -3,
@@ -103,7 +103,7 @@ export default function LandingPage() {
         delay: 1
       });
 
-      gsap.to('.float-3', {
+      gsap.to('.orb-3', {
         y: -15,
         x: 20,
         rotation: 5,
@@ -114,25 +114,25 @@ export default function LandingPage() {
         delay: 2
       });
 
-      // ── Scroll-triggered sections ──
-      gsap.utils.toArray('.reveal-section').forEach((section) => {
+      // Reveal sections
+      gsap.utils.toArray('.reveal').forEach((section) => {
         gsap.from(section, {
           opacity: 0,
-          y: 60,
+          y: 50,
           duration: 1.2,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 75%',
+            start: 'top 80%',
             toggleActions: 'play none none none'
           }
         });
       });
 
-      // ── Feature cards ──
-      gsap.utils.toArray('.feature-card').forEach((card, i) => {
+      // Feature cards
+      gsap.utils.toArray('.feat-card').forEach((card, i) => {
         gsap.from(card, {
-          y: 60,
+          y: 50,
           opacity: 0,
           duration: 0.9,
           ease: 'power3.out',
@@ -145,8 +145,8 @@ export default function LandingPage() {
         });
       });
 
-      // ── Stats ──
-      gsap.utils.toArray('.luxury-stat').forEach((el) => {
+      // Stats
+      gsap.utils.toArray('.stat-val').forEach((el) => {
         const target = parseInt(el.dataset.target, 10);
         gsap.fromTo(el,
           { innerText: 0 },
@@ -164,10 +164,10 @@ export default function LandingPage() {
         );
       });
 
-      // ── How it works steps ──
-      gsap.utils.toArray('.step-card').forEach((step, i) => {
+      // Steps
+      gsap.utils.toArray('.step-item').forEach((step, i) => {
         gsap.from(step, {
-          x: i % 2 === 0 ? -60 : 60,
+          x: i % 2 === 0 ? -50 : 50,
           opacity: 0,
           duration: 0.9,
           ease: 'power3.out',
@@ -179,10 +179,10 @@ export default function LandingPage() {
         });
       });
 
-      // ── Pricing cards ──
-      gsap.utils.toArray('.pricing-card').forEach((card, i) => {
+      // Pricing cards
+      gsap.utils.toArray('.price-card').forEach((card, i) => {
         gsap.from(card, {
-          y: 80,
+          y: 60,
           opacity: 0,
           duration: 1,
           ease: 'power3.out',
@@ -195,10 +195,10 @@ export default function LandingPage() {
         });
       });
 
-      // ── Parallax backgrounds ──
-      gsap.utils.toArray('.parallax').forEach((el) => {
+      // Parallax
+      gsap.utils.toArray('.parallax-bg').forEach((el) => {
         gsap.to(el, {
-          yPercent: -30,
+          yPercent: -20,
           ease: 'none',
           scrollTrigger: {
             trigger: el.parentElement,
@@ -209,7 +209,7 @@ export default function LandingPage() {
         });
       });
 
-      // ── Glow follow mouse ──
+      // Cursor glow
       document.addEventListener('mousemove', (e) => {
         const x = e.clientX / window.innerWidth;
         const y = e.clientY / window.innerHeight;
@@ -225,49 +225,54 @@ export default function LandingPage() {
     return () => ctx.revert();
   }, []);
 
-  // ── Data ──
   const features = [
     {
       icon: <Smartphone className="w-6 h-6" />,
       title: 'Contactless QR Ordering',
-      desc: 'Customers scan table QR codes with their phones — no apps, no downloads.',
-      gradient: 'from-violet-500 to-fuchsia-500',
-      iconBg: 'bg-violet-500/10'
+      desc: 'Customers scan table QR codes with phones — no apps, no downloads.',
+      grad: 'from-violet-500 to-fuchsia-500',
+      bg: 'bg-violet-500/10',
+      text: 'text-violet-400'
     },
     {
       icon: <Cpu className="w-6 h-6" />,
       title: 'Kitchen Display System',
-      desc: 'Real-time kitchen dashboard with prep timers, acoustic alerts, and chef notes.',
-      gradient: 'from-cyan-500 to-blue-500',
-      iconBg: 'bg-cyan-500/10'
+      desc: 'Real-time kitchen dashboard with prep timers and acoustic alerts.',
+      grad: 'from-cyan-500 to-blue-500',
+      bg: 'bg-cyan-500/10',
+      text: 'text-cyan-400'
     },
     {
       icon: <Printer className="w-6 h-6" />,
       title: 'Smart Billing & PDF',
-      desc: 'Generate professional tax invoices, thermal receipts, and send bills via WhatsApp.',
-      gradient: 'from-amber-500 to-orange-500',
-      iconBg: 'bg-amber-500/10'
+      desc: 'Generate tax invoices, thermal receipts, and send bills via WhatsApp.',
+      grad: 'from-amber-500 to-orange-500',
+      bg: 'bg-amber-500/10',
+      text: 'text-amber-400'
     },
     {
       icon: <Layers className="w-6 h-6" />,
       title: 'Table Management',
-      desc: 'Create unlimited tables, design premium QR tent cards, and track orders live.',
-      gradient: 'from-emerald-500 to-teal-500',
-      iconBg: 'bg-emerald-500/10'
+      desc: 'Create unlimited tables, design QR tent cards, track orders live.',
+      grad: 'from-emerald-500 to-teal-500',
+      bg: 'bg-emerald-50/10',
+      text: 'text-emerald-400'
     },
     {
       icon: <BarChart2 className="w-6 h-6" />,
       title: 'SaaS Analytics',
-      desc: 'Track MRR, subscriptions, active restaurants, and revenue in real-time.',
-      gradient: 'from-pink-500 to-rose-500',
-      iconBg: 'bg-pink-500/10'
+      desc: 'Track MRR, subscriptions, active restaurants, and revenue.',
+      grad: 'from-pink-500 to-rose-500',
+      bg: 'bg-pink-50/10',
+      text: 'text-pink-400'
     },
     {
       icon: <Shield className="w-6 h-6" />,
       title: 'Multi-Tenant Security',
-      desc: 'Complete data isolation per restaurant with role-based access control.',
-      gradient: 'from-indigo-500 to-violet-500',
-      iconBg: 'bg-indigo-500/10'
+      desc: 'Complete data isolation per restaurant with role-based access.',
+      grad: 'from-indigo-500 to-violet-500',
+      bg: 'bg-indigo-50/10',
+      text: 'text-indigo-400'
     }
   ];
 
@@ -291,18 +296,18 @@ export default function LandingPage() {
       name: 'Standard Bistro',
       price: '1,999',
       period: '/month',
-      desc: 'Perfect for single outlet restaurants getting started with digital ordering.',
+      desc: 'Perfect for single outlet restaurants getting started.',
       features: ['Digital QR Menu', 'Kitchen Display (KDS)', 'Staff Accounts', 'Basic Analytics', 'Table Management'],
-      gradient: 'from-violet-500 to-fuchsia-500',
+      grad: 'from-violet-500 to-fuchsia-500',
       popular: false
     },
     {
       name: 'Enterprise Dine',
       price: '4,999',
       period: '/month',
-      desc: 'Advanced platform for multi-outlet restaurant chains with full SaaS control.',
+      desc: 'Advanced platform for multi-outlet restaurant chains.',
       features: ['Multiple Outlets', 'Advance KDS', 'Promo & Coupons', 'Tax Configuration', 'Custom Branding', 'Priority Support'],
-      gradient: 'from-fuchsia-500 to-cyan-500',
+      grad: 'from-fuchsia-500 to-cyan-500',
       popular: true
     }
   ];
@@ -316,10 +321,10 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white font-sans overflow-x-hidden selection:bg-violet-500/30 selection:text-white">
-      {/* ── Cursor Glow ── */}
+      {/* Cursor Glow */}
       <div className="fixed top-0 left-0 z-[-1] w-[600px] h-[600px] rounded-full bg-violet-500/10 blur-[120px] pointer-events-none cursor-glow" />
 
-      {/* ── NAVBAR ── */}
+      {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => navigate('/')}>
@@ -329,7 +334,6 @@ export default function LandingPage() {
             <span className="font-display font-bold text-xl tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-violet-300 to-fuchsia-300">MenuMate</span>
           </div>
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {[
               { label: 'Features', href: '#features' },
@@ -364,7 +368,6 @@ export default function LandingPage() {
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-white hover:bg-white/[0.05] transition-all"
@@ -373,7 +376,6 @@ export default function LandingPage() {
           </button>
         </div>
 
-        {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
           <div className="fixed inset-0 z-40 bg-[#0a0a0f]/95 backdrop-blur-2xl">
             <div className="absolute top-6 right-6">
@@ -409,25 +411,23 @@ export default function LandingPage() {
         )}
       </nav>
 
-      {/* ── HERO ── */}
+      {/* Hero */}
       <section className="relative min-h-screen flex flex-col justify-center pt-20 pb-16 px-6 overflow-hidden">
-        {/* Background Glows */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="float-1 absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-violet-600/20 blur-[160px] pointer-events-none" />
-          <div className="float-2 absolute bottom-[-10%] right-[-10%] w-[700px] h-[700px] rounded-full bg-fuchsia-600/15 blur-[180px] pointer-events-none" />
-          <div className="float-3 absolute top-[40%] left-[30%] w-[400px] h-[400px] rounded-full bg-cyan-600/10 blur-[140px] pointer-events-none" />
+          <div className="orb-1 absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-violet-600/20 blur-[160px] pointer-events-none" />
+          <div className="orb-2 absolute bottom-[-10%] right-[-10%] w-[700px] h-[700px] rounded-full bg-fuchsia-600/15 blur-[180px] pointer-events-none" />
+          <div className="orb-3 absolute top-[40%] left-[30%] w-[400px] h-[400px] rounded-full bg-cyan-600/10 blur-[140px] pointer-events-none" />
         </div>
 
-        {/* Subtle Grid */}
         <div className="absolute inset-0 opacity-[0.02]" style={{
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
           backgroundSize: '80px 80px'
         }} />
 
-        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Left Content */}
-          <div className="flex flex-col justify-center">
-            <div className="hero-kicker inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-violet-500/[0.08] border border-violet-500/[0.2] text-violet-400 text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-sm">
+          <div className="flex flex-col justify-center max-w-[560px]">
+            <div className="hero-kicker inline-flex items-center gap-2 px-5 py-2 rounded-full bg-violet-500/[0.08] border border-violet-500/[0.2] text-violet-400 text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-sm">
               <Zap className="w-3.5 h-3.5" />
               Premium Restaurant SaaS Platform
             </div>
@@ -444,9 +444,9 @@ export default function LandingPage() {
               </span>
             </h1>
 
-            <p className="hero-subtitle text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-10 max-w-[560px]">
+            <p className="hero-subtitle text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-10">
               A luxury QR-based ordering & management suite built for modern restaurants.
-              Contactless menus, real-time kitchen displays, smart billing, and elegant table booking — all in one platform.
+              Contactless menus, real-time kitchen displays, smart billing, and elegant table booking.
             </p>
 
             <div className="hero-cta-group flex flex-wrap gap-4">
@@ -464,12 +464,11 @@ export default function LandingPage() {
               </a>
             </div>
 
-            {/* Stats Row */}
             <div className="hero-stats mt-16 flex items-end gap-8 border-t border-white/5 pt-8">
               {stats.map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-3xl md:text-4xl font-extrabord font-mono text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
-                    <span className="luxury-stat" data-target={stat.value}>{stat.value}</span>{stat.suffix}
+                    <span className="stat-val" data-target={stat.value}>{stat.value}</span>{stat.suffix}
                   </div>
                   <div className="text-xs text-slate-500 mt-2 uppercase tracking-wider font-medium">{stat.label}</div>
                 </div>
@@ -477,22 +476,21 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right Visual - iPhone Mockup */}
+          {/* Right - iPhone Mockup (Fixed dimensions, no overflow) */}
           <div className="relative flex items-center justify-center hidden lg:block">
-            {/* iPhone Mockup Container */}
-            <div className="relative inline-block">
-              {/* Phone Shadow */}
-              <div className="absolute inset-0 w-full h-full bg-black/60 blur-[60px] rounded-[3rem] opacity-40 animate-pulse" style={{ animationDuration: '4s' }} />
+            {/* Shadow */}
+            <div className="absolute inset-0 w-full h-full bg-black/50 blur-[80px] rounded-[3rem] opacity-50 animate-pulse" style={{ animationDuration: '4s' }} />
 
-              {/* iPhone Frame */}
-              <div className="iphone-mockup relative w-[290px] h-[620px] rounded-[3rem] border-[4px] border-white/10 bg-gradient-to-b from-slate-950 to-black shadow-2xl shadow-violet-500/20 overflow-hidden relative z-10">
-                {/* Phone Top Bar */}
+            {/* iPhone Frame - Fixed size */}
+            <div className="iphone-wrap relative inline-block z-10">
+              <div className="relative w-[290px] h-[640px] rounded-[3rem] border-[4px] border-white/10 bg-gradient-to-b from-slate-950 to-black shadow-2xl shadow-violet-500/20 overflow-hidden">
+                {/* Top bar */}
                 <div className="absolute top-0 left-0 right-0 h-6 bg-black z-20" />
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-full z-30" />
 
-                {/* Status Bar */}
+                {/* Status bar */}
                 <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-20 pointer-events-none">
-                  <div className="flex gap-1.5 text-[10px] text-slate-400">
+                  <div className="flex gap-1 text-[10px] text-slate-400">
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '200ms' }} />
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '400ms' }} />
@@ -505,11 +503,10 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* App Screen Content */}
-                <div className="absolute inset-0 p-6 pt-16 overflow-hidden flex flex-col w-full h-full">
-                  {/* Header */}
+                {/* Screen content - fixed height with overflow hidden */}
+                <div className="absolute inset-0 p-5 pt-16 overflow-hidden flex flex-col w-full h-full">
                   <div className="flex items-start justify-between mb-4">
-                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20">
                       <Layout className="text-white text-sm" />
                     </div>
                     <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
@@ -517,26 +514,22 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  <div className="flex-1 space-y-3 overflow-y-auto no-scrollbar pr-2">
-                    <div className="space-y-2">
-                      <h3 className="font-bold text-white text-sm tracking-tight">Gourmet Garden</h3>
+                  <div className="flex-1 overflow-hidden flex flex-col">
+                    <div className="space-y-2 mb-2">
+                      <h3 className="font-bold text-white text-sm tracking-tight truncate">Gourmet Garden</h3>
                       <p className="text-[11px] text-slate-400 line-clamp-1">Table 4 • Garden View</p>
                     </div>
 
-                    {/* Menu Items */}
-                    <div className="space-y-3">
+                    <div className="flex-1 overflow-y-auto no-scrollbar pr-2 space-y-3">
                       {[
                         { name: 'Truffle Parmesan Fries', price: '249', pop: true },
                         { name: 'Pesto Mozzarella Pizza', price: '549', pop: true },
                         { name: 'Molten Lava Cake', price: '299', pop: false },
                         { name: 'Garden Mint Mojito', price: '189', pop: true }
                       ].map((item, i) => (
-                        <div
-                          key={i}
-                          className={`flex items-center justify-between p-3 rounded-xl ${i % 2 === 0 ? 'bg-white/[0.03] border border-white/[0.05]' : 'bg-white/[0.02] border border-white/[0.03]'} hover:bg-white/[0.05] transition-colors duration-300 cursor-pointer`}
-                        >
-                          <div className="flex items-center gap-3 flex-1">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10">
+                        <div key={i} className={`flex items-center justify-between p-3 rounded-xl ${i % 2 === 0 ? 'bg-white/[0.03] border border-white/[0.05]' : 'bg-white/[0.02] border border-white/[0.03]'} hover:bg-white/[0.05] transition-colors duration-300 cursor-pointer`}>
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10 shrink-0">
                               <Star className="text-violet-400 text-xs fill-violet-400" />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -544,10 +537,10 @@ export default function LandingPage() {
                                 <h4 className="font-semibold text-sm text-white truncate">{item.name}</h4>
                                 <span className="text-violet-400 font-mono text-xs font-bold">₹{item.price}</span>
                               </div>
-                              <p className="text-[10px] text-slate-500 line-clamp-1">Artisanal preparation</p>
+                              <p className="text-[10px] text-slate-500 line-clamp-1 truncate">Artisanal preparation</p>
                             </div>
                           </div>
-                          <button className="w-7 h-7 rounded-full bg-violet-500/20 hover:bg-violet-500/30 flex items-center justify-center text-violet-400 text-xs transition-all group-hover:bg-violet-500 group-hover:text-white">
+                          <button className="w-7 h-7 rounded-full bg-violet-500/20 hover:bg-violet-500/30 flex items-center justify-center text-violet-400 text-xs transition-all">
                             <PlusIcon className="w-3 h-3" />
                           </button>
                         </div>
@@ -555,8 +548,7 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  {/* Bottom Cart - Fixed at bottom */}
-                  <div className="mt-4 p-4 rounded-2xl bg-white/[0.05] border border-white/[0.1]">
+                  <div className="mt-4 p-4 rounded-2xl bg-white/[0.05] border border-white/[0.1] shrink-0">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-bold text-white tracking-tight">Cart</span>
                       <span className="text-xs font-bold text-fuchsia-400">3 items</span>
@@ -576,10 +568,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── FEATURES ── */}
-      <section id="features" className="py-24 px-6 relative overflow-hidden reveal-section">
+      {/* Features */}
+      <section id="features" className="py-24 px-6 relative overflow-hidden reveal">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="parallax absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-violet-900/20 via-transparent to-transparent -mt-[20%]" />
+          <div className="parallax-bg absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-violet-900/20 via-transparent to-transparent -mt-[20%]" />
         </div>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -600,9 +592,9 @@ export default function LandingPage() {
             {features.map((f, i) => (
               <div
                 key={i}
-                className={`feature-card group relative p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.1] hover:bg-white/[0.04] transition-all duration-500 hover:-translate-y-2`}
+                className={`feat-card group relative p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.1] hover:bg-white/[0.04] transition-all duration-500 hover:-translate-y-2 overflow-hidden`}
               >
-                <div className={`w-14 h-14 rounded-2xl ${f.iconBg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-[0_0_40px_rgba(99,102,241,0.15)]`}>
+                <div className={`${f.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-[0_0_40px_rgba(99,102,241,0.15)] shrink-0 w-14 h-14 rounded-2xl`}>
                   {f.icon}
                 </div>
                 <h3 className="text-xl font-bold font-display mb-3 group-hover:text-white transition-colors">{f.title}</h3>
@@ -614,8 +606,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
-      <section id="how-it-works" className="py-24 px-6 bg-white/[0.01] reveal-section">
+      {/* How It Works */}
+      <section id="how-it-works" className="py-24 px-6 bg-white/[0.01] reveal">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/[0.1] border border-cyan-500/[0.2] text-cyan-400 text-xs font-bold uppercase tracking-widest mb-6">
@@ -634,13 +626,13 @@ export default function LandingPage() {
             {steps.map((step, i) => (
               <div
                 key={i}
-                className={`step-card group relative flex items-center gap-8 p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500`}
+                className={`step-item group relative flex items-center gap-8 p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500 overflow-hidden`}
               >
                 <div className="shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-extrabord text-xl font-mono shadow-2xl shadow-violet-500/30 group-hover:scale-110 transition-transform duration-500">
                   {step.num}
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-bold font-display mb-2 group-hover:text-white transition-colors">{step.title}</h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-bold font-display mb-2 group-hover:text-white transition-colors truncate">{step.title}</h3>
                   <p className="text-slate-400 text-sm font-light">{step.desc}</p>
                 </div>
                 <div className={`absolute -right-8 top-1/2 -translate-y-1/2 w-px h-[60px] bg-white/[0.05] ${i === steps.length - 1 ? 'hidden' : 'block'}`} />
@@ -650,13 +642,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── TABLE BOOKING ── */}
-      <section id="booking" className="py-24 px-6 relative overflow-hidden reveal-section">
+      {/* Table Booking */}
+      <section id="booking" className="py-24 px-6 relative overflow-hidden reveal">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="parallax absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/10 via-transparent to-transparent" />
+          <div className="parallax-bg absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/10 via-transparent to-transparent" />
         </div>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="flex flex-col justify-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="flex flex-col justify-center max-w-[560px]">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/[0.1] border border-emerald-500/[0.2] text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6">
               <ShoppingBag className="w-3 h-3" />
               Smart Table Management
@@ -680,7 +672,7 @@ export default function LandingPage() {
                 'Auto-bill generation on checkout'
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-emerald-400">
+                  <div className="w-8 h-8 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-emerald-400 shrink-0">
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
                   <span className="text-slate-300 text-sm">{item}</span>
@@ -696,7 +688,6 @@ export default function LandingPage() {
             </button>
           </div>
 
-          {/* Table Cards Visual */}
           <div className="relative flex justify-center">
             <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
               {[
@@ -705,15 +696,12 @@ export default function LandingPage() {
                 { name: 'Table 3', sub: 'VIP Booth', color: 'from-amber-500 to-orange-500' },
                 { name: 'Table 4', sub: 'Bonsai Corner', color: 'from-emerald-500 to-teal-500' }
               ].map((t, i) => (
-                <div
-                  key={i}
-                  className={`p-6 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] transition-all duration-300 group`}
-                >
-                  <div className={`w-12 h-12 rounded-2xl ${t.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                <div key={i} className={`p-6 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] transition-all duration-300 group overflow-hidden`}>
+                  <div className={`${t.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 shrink-0 w-12 h-12 rounded-2xl`}>
                     <Layout className="text-white text-sm" />
                   </div>
-                  <h4 className="font-bold text-sm text-white">{t.name}</h4>
-                  <p className="text-[10px] text-slate-500 mt-1">{t.sub}</p>
+                  <h4 className="font-bold text-sm text-white truncate">{t.name}</h4>
+                  <p className="text-[10px] text-slate-500 mt-1 truncate">{t.sub}</p>
                   <div className="mt-4 flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Active
@@ -725,10 +713,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── PRICING ── */}
-      <section id="pricing" className="py-24 px-6 relative overflow-hidden reveal-section">
+      {/* Pricing */}
+      <section id="pricing" className="py-24 px-6 relative overflow-hidden reveal">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="parallax absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-900/10 via-transparent to-transparent" />
+          <div className="parallax-bg absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-900/10 via-transparent to-transparent" />
         </div>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
@@ -748,10 +736,10 @@ export default function LandingPage() {
             {pricing.map((plan, i) => (
               <div
                 key={i}
-                className={`pricing-card relative p-10 rounded-3xl border transition-all duration-500 ${plan.popular
+                className={`price-card relative p-10 rounded-3xl border transition-all duration-500 ${plan.popular
                   ? 'border-fuchsia-500/50 bg-fuchsia-500/[0.03] scale-[1.02] shadow-2xl shadow-fuchsia-500/10'
                   : 'border-white/[0.04] bg-white/[0.02] hover:border-white/[0.1] hover:-translate-y-2'
-                }`}
+                } overflow-hidden`}
               >
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-fuchsia-500 text-slate-900 text-xs font-bold uppercase tracking-widest shadow-lg shadow-fuchsia-500/40">
@@ -787,8 +775,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── FAQ ── */}
-      <section id="faq" className="py-24 px-6 bg-white/[0.01] reveal-section">
+      {/* FAQ */}
+      <section id="faq" className="py-24 px-6 bg-white/[0.01] reveal">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/[0.1] border border-pink-500/[0.2] text-pink-400 text-xs font-bold uppercase tracking-widest mb-6">
@@ -805,9 +793,9 @@ export default function LandingPage() {
 
           <div className="space-y-4">
             {faqs.map((faq, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-300 group">
+              <div key={i} className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-300 group overflow-hidden">
                 <div className="flex justify-between items-center mb-3 cursor-pointer">
-                  <h3 className="font-bold font-display text-white group-hover:text-violet-400 transition-colors">{faq.q}</h3>
+                  <h3 className="font-bold font-display text-white group-hover:text-violet-400 transition-colors truncate">{faq.q}</h3>
                   <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-violet-400 transition-colors" />
                 </div>
                 <p className="text-slate-400 text-sm font-light leading-relaxed">{faq.a}</p>
@@ -817,10 +805,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* CTA */}
       <section className="py-24 px-6 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="parallax absolute inset-0 bg-gradient-to-br from-violet-900/30 via-transparent to-transparent" />
+          <div className="parallax-bg absolute inset-0 bg-gradient-to-br from-violet-900/30 via-transparent to-transparent" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto text-center p-16 rounded-[3rem] bg-gradient-to-br from-violet-900/20 via-fuchsia-900/20 to-transparent border border-white/[0.05] backdrop-blur-xl">
           <h2 className="text-4xl md:text-5xl font-extrabord font-display tracking-tight mb-6">
@@ -847,7 +835,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
+      {/* Footer */}
       <footer className="py-16 px-6 border-t border-white/[0.05]">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
