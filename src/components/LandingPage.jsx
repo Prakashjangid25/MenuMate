@@ -653,22 +653,50 @@ export default function LandingPage() {
           </div>
 
           <div className="relative flex justify-center">
-            <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
+            <div className="grid grid-cols-2 gap-5 max-w-md mx-auto">
               {[
-                { name: 'Table 1', sub: 'Garden View', color: 'from-violet-500 to-fuchsia-500' },
-                { name: 'Table 2', sub: 'Window Side', color: 'from-cyan-500 to-blue-500' },
-                { name: 'Table 3', sub: 'VIP Booth', color: 'from-amber-500 to-orange-500' },
-                { name: 'Table 4', sub: 'Bonsai Corner', color: 'from-emerald-500 to-teal-500' }
+                { name: 'Table 1', sub: 'Garden View', color: 'from-violet-500 to-fuchsia-500', glow: 'shadow-violet-500/30' },
+                { name: 'Table 2', sub: 'Window Side', color: 'from-cyan-500 to-blue-500', glow: 'shadow-cyan-500/30' },
+                { name: 'Table 3', sub: 'VIP Booth', color: 'from-amber-500 to-orange-500', glow: 'shadow-amber-500/30' },
+                { name: 'Table 4', sub: 'Bonsai Corner', color: 'from-emerald-500 to-teal-500', glow: 'shadow-emerald-500/30' }
               ].map((t, i) => (
-                <div key={i} className={`p-6 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] transition-all duration-300 group overflow-hidden`}>
-                  <div className={`${t.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 shrink-0 w-12 h-12 rounded-2xl`}>
-                    <Layout className="text-white text-sm" />
+                <div
+                  key={i}
+                  className="group relative p-6 rounded-3xl bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl border border-white/[0.1] hover:border-white/[0.25] transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl overflow-hidden"
+                >
+                  {/* Top accent gradient line */}
+                  <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r ${t.color} opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
+
+                  {/* Soft corner glow */}
+                  <div className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br ${t.color} opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500`} />
+
+                  {/* Icon */}
+                  <div className="relative flex items-center justify-between mb-5">
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${t.color} flex items-center justify-center shadow-lg ${t.glow} group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                      <Layout className="text-white text-base" />
+                    </div>
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/[0.12] border border-emerald-500/[0.25]">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                      </span>
+                      <span className="text-[10px] font-semibold text-emerald-300 tracking-wide">Active</span>
+                    </div>
                   </div>
-                  <h4 className="font-bold text-sm text-white truncate">{t.name}</h4>
-                  <p className="text-[10px] text-slate-500 mt-1 truncate">{t.sub}</p>
-                  <div className="mt-4 flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    Active
+
+                  {/* Title */}
+                  <h4 className="relative font-bold text-base text-white tracking-tight mb-1">{t.name}</h4>
+                  <p className="relative text-xs text-slate-400 font-medium">{t.sub}</p>
+
+                  {/* Bottom QR hint */}
+                  <div className="relative mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between">
+                    <span className="text-[10px] text-slate-500 font-medium">Scan to order</span>
+                    <div className="flex items-center gap-1 text-[10px] text-slate-400 font-mono">
+                      <span className="w-3 h-3 rounded-sm bg-white/[0.08] border border-white/[0.1] flex items-center justify-center">
+                        <span className="w-1.5 h-1.5 bg-slate-400 rounded-[1px]" />
+                      </span>
+                      QR
+                    </div>
                   </div>
                 </div>
               ))}
