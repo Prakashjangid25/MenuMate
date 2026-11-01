@@ -28,7 +28,8 @@ import {
   FiChevronDown,
   FiDownload,
   FiUpload,
-  FiDollarSign
+  FiDollarSign,
+  FiArrowRight
 } from 'react-icons/fi';
 import FloorMapManager from './FloorMapManager.jsx';
 import BillingSystem from './BillingSystem.jsx';
