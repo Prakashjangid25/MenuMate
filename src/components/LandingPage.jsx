@@ -489,41 +489,38 @@ export default function LandingPage() {
             {/* Dark gradient background behind phone */}
             <div className="absolute inset-0 bg-gradient-to-br from-violet-900/40 via-transparent to-transparent" />
 
-            {/* iPhone Container - centered with scale for smaller screens */}
+            {/* iPhone Container */}
             <div className="iphone-wrap relative inline-block z-10 transform scale-95 md:scale-100 transition-transform duration-300">
+              {/* iPhone Frame: 393x852, radius 55px, titanium border */}
+              <div className="iphone relative w-[393px] h-[852px] rounded-[55px] bg-[linear-gradient(145deg,#8a8a8f,#3a3a3c,#6e6e73)] p-[2px] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
 
-              {/* Side Buttons - Left */}
-              <div className="absolute left-[-12px] top-1/2 -translate-y-1/2 flex flex-col gap-[15px] pointer-events-none">
-                <div className="w-[3px] h-[28px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" />
-                <div className="w-[3px] h-[55px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" />
-                <div className="w-[3px] h-[55px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" />
-              </div>
+                {/* Side Buttons - Left: touches edge at left: -3px */}
+                <div className="absolute left-[-3px] top-1/2 -translate-y-1/2 flex flex-col gap-[15px] pointer-events-none">
+                  <div className="w-[3px] h-[28px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" /> {/* action */}
+                  <div className="w-[3px] h-[55px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" /> {/* vol up */}
+                  <div className="w-[3px] h-[55px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" /> {/* vol down */}
+                </div>
 
-              {/* Side Button - Right (Power) */}
-              <div className="absolute right-[-12px] top-[30%] w-[3px] h-[90px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full pointer-events-none" />
+                {/* Side Button - Right: touches edge at right: -3px */}
+                <div className="absolute right-[-3px] top-[30%] w-[3px] h-[90px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full pointer-events-none" />
 
-              {/* Titanium Frame Wrapper */}
-              <div className="relative w-[397px] h-[856px] rounded-[57px] bg-[linear-gradient(145deg,#8a8a8f,#3a3a3c,#6e6e73)] p-[2px] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
-                {/* Phone Body */}
-                <div className="relative w-full h-full rounded-[55px] bg-black overflow-hidden">
+                {/* Phone Screen: inset 10px, radius 45px, overflow hidden, bg #000 */}
+                <div className="phone-screen absolute inset-[10px] rounded-[45px] overflow-hidden bg-[#000]">
 
-                  {/* Dynamic Island Area (top bezel) */}
-                  <div className="absolute top-0 left-0 right-0 h-[20px] bg-[#000] z-30" />
-
-                  {/* Dynamic Island - pure black pill, EMPTY */}
-                  <div className="absolute top-[11px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-[#000] rounded-[20px] z-40">
+                  {/* Dynamic Island: single pill, EMPTY, z-index above everything */}
+                  <div className="dynamic-island absolute top-[11px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-[#000] rounded-[20px] z-50">
                     {/* Tiny camera lens on right side of pill */}
                     <div className="absolute right-[14px] top-1/2 -translate-y-1/2 w-[12px] h-[12px] rounded-full bg-[#0a0a0f] border border-white/5">
                       <div className="absolute inset-0 w-full h-full rounded-full bg-[radial-gradient(circle_at_center,#0000ff30,transparent)] opacity-40 pointer-events-none" />
                     </div>
                   </div>
 
-                  {/* Status Bar */}
-                  <div className="absolute top-[37px] left-6 right-6 h-[54px] bg-[#000] z-20 flex items-center justify-between px-2 pointer-events-none">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[16px] font-semibold text-white">9:41</span>
+                  {/* Status Bar: transparent, absolute top:0, height 54px, z-index 10 */}
+                  <div className="status-bar absolute top-0 left-0 right-0 h-[54px] bg-transparent z-40 flex items-center justify-between px-4 pointer-events-none">
+                    <div className="pl-4 flex items-center gap-2">
+                      <span className="text-[16px] font-[600] text-white">9:41</span>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="pr-4 flex items-center gap-1">
                       {/* Signal */}
                       <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M22 12h-4l-3 3 L9 7l-1 1 4 6 2-2" />
@@ -540,12 +537,12 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  {/* Screen Content */}
+                  {/* Screen Content: padding-top 54px, scroll, hidden scrollbar */}
                   <div className="screen-content relative z-0 w-full h-full pt-[54px] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                     {/* Glass glare overlay */}
                     <div className="absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent)] pointer-events-none" />
 
-                    {/* Existing App Content - unchanged */}
+                    {/* Existing App UI - unchanged */}
                     <div className="relative z-0 w-full h-full">
                       {/* Header */}
                       <div className="flex items-start justify-between mb-4">
@@ -612,7 +609,7 @@ export default function LandingPage() {
                   </div>
 
                   {/* Home Indicator */}
-                  <div className="absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[134px] h-[5px] bg-white/[0.9] rounded-[3px] z-50 pointer-events-none" />
+                  <div className="home-indicator absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[134px] h-[5px] bg-white/[0.9] rounded-[3px] z-50 pointer-events-none" />
                 </div>
               </div>
             </div>
