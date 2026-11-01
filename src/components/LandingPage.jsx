@@ -73,7 +73,13 @@ export default function LandingPage() {
           y: 40,
           opacity: 0,
           duration: 0.9
-        }, '-=0.3');
+        }, '-=0.3')
+        .from('.iphone-mockup', {
+          y: 60,
+          opacity: 0,
+          duration: 1.4,
+          ease: 'power3.out'
+        }, '-=0.8');
 
       // Floating elements
       gsap.to('.float-1', {
@@ -224,42 +230,42 @@ export default function LandingPage() {
     {
       icon: <Smartphone className="w-6 h-6" />,
       title: 'Contactless QR Ordering',
-      desc: 'Customers scan table QR codes with their phones — no apps, no downloads. Instant access to your digital menu.',
+      desc: 'Customers scan table QR codes with their phones — no apps, no downloads.',
       gradient: 'from-violet-500 to-fuchsia-500',
       iconBg: 'bg-violet-500/10'
     },
     {
       icon: <Cpu className="w-6 h-6" />,
       title: 'Kitchen Display System',
-      desc: 'Real-time kitchen dashboard with prep timers, acoustic alerts, and chef notes. Orders flow from table to kitchen instantly.',
+      desc: 'Real-time kitchen dashboard with prep timers, acoustic alerts, and chef notes.',
       gradient: 'from-cyan-500 to-blue-500',
       iconBg: 'bg-cyan-500/10'
     },
     {
       icon: <Printer className="w-6 h-6" />,
       title: 'Smart Billing & PDF',
-      desc: 'Generate professional tax invoices, thermal receipts, and send bills via WhatsApp. GST and service charge support.',
+      desc: 'Generate professional tax invoices, thermal receipts, and send bills via WhatsApp.',
       gradient: 'from-amber-500 to-orange-500',
       iconBg: 'bg-amber-500/10'
     },
     {
       icon: <Layers className="w-6 h-6" />,
       title: 'Table Management',
-      desc: 'Create unlimited tables, design premium QR tent cards, download PNG/PDF, and track table-wise orders in real-time.',
+      desc: 'Create unlimited tables, design premium QR tent cards, and track orders live.',
       gradient: 'from-emerald-500 to-teal-500',
       iconBg: 'bg-emerald-500/10'
     },
     {
       icon: <BarChart2 className="w-6 h-6" />,
       title: 'SaaS Analytics',
-      desc: 'Track MRR, subscriptions, active restaurants, and revenue. Full dashboard for platform owners and restaurant admins.',
+      desc: 'Track MRR, subscriptions, active restaurants, and revenue in real-time.',
       gradient: 'from-pink-500 to-rose-500',
       iconBg: 'bg-pink-500/10'
     },
     {
       icon: <Shield className="w-6 h-6" />,
       title: 'Multi-Tenant Security',
-      desc: 'Complete data isolation per restaurant. Role-based access for Super Admin, Restaurant Admin, Kitchen staff, and Customers.',
+      desc: 'Complete data isolation per restaurant with role-based access control.',
       gradient: 'from-indigo-500 to-violet-500',
       iconBg: 'bg-indigo-500/10'
     }
@@ -418,7 +424,7 @@ export default function LandingPage() {
           backgroundSize: '80px 80px'
         }} />
 
-        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="flex flex-col justify-center">
             <div className="hero-kicker inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-violet-500/[0.08] border border-violet-500/[0.2] text-violet-400 text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-sm">
@@ -471,35 +477,38 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right Visual - Premium Mobile Mockup */}
-          <div className="hero-visual relative flex items-center justify-center hidden lg:block">
-            {/* Background glow behind phone */}
-            <div className="absolute inset-0 w-[400px] h-[700px] bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20 rounded-full blur-[100px] mix-blend-screen" />
+          {/* Right Visual - iPhone Mockup */}
+          <div className="relative flex items-center justify-center hidden lg:block">
+            {/* iPhone Mockup Container */}
+            <div className="relative inline-block">
+              {/* Phone Shadow */}
+              <div className="absolute inset-0 w-full h-full bg-black/60 blur-[60px] rounded-[3rem] opacity-40 animate-pulse" style={{ animationDuration: '4s' }} />
 
-            {/* Phone Mockup */}
-            <div className="relative z-10 mx-auto w-[290px] h-[620px] rounded-[3rem] border-[2px] border-white/10 bg-gradient-to-b from-slate-900 to-black shadow-2xl shadow-violet-500/20 overflow-hidden relative group">
-              {/* Phone notch */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-4 bg-slate-900 rounded-b-full z-20" />
-              {/* Status bar */}
-              <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-20 pointer-events-none">
-                <div className="flex gap-1.5 text-[10px] text-slate-400">
-                  <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '200ms' }} />
-                  <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '400ms' }} />
-                </div>
-                <span className="text-[10px] font-medium text-slate-300">9:41</span>
-                <div className="flex gap-0.5 text-[10px] text-slate-400">
-                  <div className="w-1 h-4 bg-slate-600 rounded" />
-                  <div className="w-1 h-3.5 bg-slate-600 rounded" />
-                  <div className="w-1 h-3 bg-slate-600 rounded" />
-                </div>
-              </div>
+              {/* iPhone Frame */}
+              <div className="iphone-mockup relative w-[290px] h-[620px] rounded-[3rem] border-[4px] border-white/10 bg-gradient-to-b from-slate-950 to-black shadow-2xl shadow-violet-500/20 overflow-hidden relative z-10">
+                {/* Phone Top Bar */}
+                <div className="absolute top-0 left-0 right-0 h-6 bg-black z-20" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-full z-30" />
 
-              {/* App Content */}
-              <div className="absolute inset-0 p-6 pt-16 overflow-hidden flex flex-col">
-                <div className="flex-1 space-y-4 overflow-y-auto no-scrollbar pr-2">
+                {/* Status Bar */}
+                <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-20 pointer-events-none">
+                  <div className="flex gap-1.5 text-[10px] text-slate-400">
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '200ms' }} />
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '400ms' }} />
+                  </div>
+                  <span className="text-[10px] font-medium text-slate-300">9:41</span>
+                  <div className="flex gap-0.5 text-[10px] text-slate-400">
+                    <div className="w-1 h-4 bg-slate-600 rounded" />
+                    <div className="w-1 h-3.5 bg-slate-600 rounded" />
+                    <div className="w-1 h-3 bg-slate-600 rounded" />
+                  </div>
+                </div>
+
+                {/* App Screen Content */}
+                <div className="absolute inset-0 p-6 pt-16 overflow-hidden flex flex-col w-full h-full">
                   {/* Header */}
-                  <div className="flex items-start justify-between mb-2">
+                  <div className="flex items-start justify-between mb-4">
                     <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
                       <Layout className="text-white text-sm" />
                     </div>
@@ -508,53 +517,58 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <h3 className="font-bold text-white text-sm tracking-tight">Gourmet Garden</h3>
-                    <p className="text-[11px] text-slate-400 line-clamp-2">Table 4 • Garden View</p>
-                  </div>
+                  <div className="flex-1 space-y-3 overflow-y-auto no-scrollbar pr-2">
+                    <div className="space-y-2">
+                      <h3 className="font-bold text-white text-sm tracking-tight">Gourmet Garden</h3>
+                      <p className="text-[11px] text-slate-400 line-clamp-1">Table 4 • Garden View</p>
+                    </div>
 
-                  {/* Menu Items */}
-                  <div className="space-y-3">
-                    {[
-                      { name: 'Truffle Parmesan Fries', price: '249', pop: true },
-                      { name: 'Pesto Mozzarella Pizza', price: '549', pop: true },
-                      { name: 'Molten Lava Cake', price: '299', pop: false },
-                      { name: 'Garden Mint Mojito', price: '189', pop: true }
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-colors group cursor-pointer">
-                        <div className="flex items-center gap-3 flex-1">
-                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center">
-                            <Star className="text-violet-400 text-xs fill-violet-400" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex justify-between items-baseline mb-0.5">
-                              <h4 className="font-semibold text-sm text-white truncate">{item.name}</h4>
-                              <span className="text-violet-400 font-mono text-xs font-bold">₹{item.price}</span>
+                    {/* Menu Items */}
+                    <div className="space-y-3">
+                      {[
+                        { name: 'Truffle Parmesan Fries', price: '249', pop: true },
+                        { name: 'Pesto Mozzarella Pizza', price: '549', pop: true },
+                        { name: 'Molten Lava Cake', price: '299', pop: false },
+                        { name: 'Garden Mint Mojito', price: '189', pop: true }
+                      ].map((item, i) => (
+                        <div
+                          key={i}
+                          className={`flex items-center justify-between p-3 rounded-xl ${i % 2 === 0 ? 'bg-white/[0.03] border border-white/[0.05]' : 'bg-white/[0.02] border border-white/[0.03]'} hover:bg-white/[0.05] transition-colors duration-300 cursor-pointer`}
+                        >
+                          <div className="flex items-center gap-3 flex-1">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10">
+                              <Star className="text-violet-400 text-xs fill-violet-400" />
                             </div>
-                            <p className="text-[10px] text-slate-500 line-clamp-1">Artisanal preparation</p>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex justify-between items-baseline mb-0.5">
+                                <h4 className="font-semibold text-sm text-white truncate">{item.name}</h4>
+                                <span className="text-violet-400 font-mono text-xs font-bold">₹{item.price}</span>
+                              </div>
+                              <p className="text-[10px] text-slate-500 line-clamp-1">Artisanal preparation</p>
+                            </div>
                           </div>
+                          <button className="w-7 h-7 rounded-full bg-violet-500/20 hover:bg-violet-500/30 flex items-center justify-center text-violet-400 text-xs transition-all group-hover:bg-violet-500 group-hover:text-white">
+                            <PlusIcon className="w-3 h-3" />
+                          </button>
                         </div>
-                        <button className="w-7 h-7 rounded-full bg-violet-500/20 hover:bg-violet-500/30 flex items-center justify-center text-violet-400 text-xs transition-all group-hover:bg-violet-500 group-hover:text-white">
-                          <PlusIcon className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* Bottom Cart */}
-                <div className="mt-4 p-4 rounded-2xl bg-white/[0.05] border border-white/[0.1]">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold text-white tracking-tight">Cart</span>
-                    <span className="text-xs font-bold text-fuchsia-400">3 items</span>
+                  {/* Bottom Cart - Fixed at bottom */}
+                  <div className="mt-4 p-4 rounded-2xl bg-white/[0.05] border border-white/[0.1]">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-bold text-white tracking-tight">Cart</span>
+                      <span className="text-xs font-bold text-fuchsia-400">3 items</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm text-slate-400 mb-3">
+                      <span>Subtotal</span>
+                      <span className="text-white font-bold">₹997</span>
+                    </div>
+                    <button className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-sm shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all">
+                      Checkout
+                    </button>
                   </div>
-                  <div className="flex items-center justify-between text-sm text-slate-400 mb-3">
-                    <span>Subtotal</span>
-                    <span className="text-white font-bold">₹997</span>
-                  </div>
-                  <button className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-sm shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all">
-                    Checkout
-                  </button>
                 </div>
               </div>
             </div>
