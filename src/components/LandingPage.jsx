@@ -724,43 +724,85 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
             {pricing.map((plan, i) => (
               <div
                 key={i}
-                className={`price-card relative p-10 rounded-3xl border transition-all duration-500 ${plan.popular
-                  ? 'border-fuchsia-500/50 bg-fuchsia-500/[0.03] scale-[1.02] shadow-2xl shadow-fuchsia-500/10'
-                  : 'border-white/[0.04] bg-white/[0.02] hover:border-white/[0.1] hover:-translate-y-2'
-                }`}
+                className={`price-card relative rounded-3xl transition-all duration-500 ${plan.popular ? 'md:-mt-4 md:mb-4' : ''}`}
               >
+                {/* Popular badge */}
                 {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-fuchsia-500 text-slate-900 text-xs font-bold uppercase tracking-widest shadow-lg shadow-fuchsia-500/40">
-                    <Star className="w-3 h-3 fill-yellow-400" /> Most Popular
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white text-xs font-bold uppercase tracking-widest shadow-xl shadow-fuchsia-500/40">
+                    <Star className="w-3.5 h-3.5 fill-yellow-300 text-yellow-300" />
+                    Most Popular
                   </div>
                 )}
-                <h3 className="text-xl font-bold font-display mb-2">{plan.name}</h3>
-                <div className="flex items-baseline gap-1 mb-8">
-                  <span className="text-4xl md:text-5xl font-extrabord font-mono text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">₹{plan.price}</span>
-                  <span className="text-slate-500 text-sm">{plan.period}</span>
-                </div>
-                <p className="text-sm text-slate-400 font-light mb-8">{plan.desc}</p>
-                <ul className="space-y-3 mb-10">
-                  {plan.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-3 text-sm text-slate-300">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => navigate('/admin')}
-                  className={`w-full py-4 rounded-2xl font-bold text-lg transition-all duration-300 cursor-pointer group ${plan.popular
-                    ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white shadow-lg shadow-fuchsia-500/30 hover:shadow-fuchsia-500/50'
-                    : 'bg-white/[0.03] border border-white/[0.05] text-white hover:bg-white/[0.05]'
+
+                {/* Card body */}
+                <div
+                  className={`relative h-full p-8 md:p-10 rounded-3xl border backdrop-blur-xl transition-all duration-500 overflow-visible ${plan.popular
+                    ? 'border-fuchsia-500/40 bg-gradient-to-br from-fuchsia-500/[0.08] via-violet-500/[0.05] to-transparent shadow-2xl shadow-fuchsia-500/20 hover:shadow-fuchsia-500/30'
+                    : 'border-white/[0.08] bg-gradient-to-br from-white/[0.05] to-white/[0.01] hover:border-white/[0.18] hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1'
                   }`}
                 >
-                  Get Started <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform inline ml-1" />
-                </button>
+                  {/* Corner glow for popular */}
+                  {plan.popular && (
+                    <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-fuchsia-500/20 blur-3xl pointer-events-none" />
+                  )}
+
+                  {/* Plan name */}
+                  <div className="relative flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-bold font-display text-white">{plan.name}</h3>
+                    {plan.popular && (
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-fuchsia-300 bg-fuchsia-500/10 border border-fuchsia-500/20 px-2.5 py-1 rounded-full">
+                        Best Value
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Price */}
+                  <div className="relative flex items-baseline gap-1.5 mb-3">
+                    <span className={`text-5xl md:text-6xl font-extrabord font-mono tracking-tight ${plan.popular
+                      ? 'text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-400'
+                      : 'text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400'
+                    }`}>
+                      ₹{plan.price}
+                    </span>
+                    <span className="text-slate-500 text-sm font-medium">{plan.period}</span>
+                  </div>
+
+                  <p className="relative text-sm text-slate-400 font-light mb-8 leading-relaxed">{plan.desc}</p>
+
+                  {/* Divider */}
+                  <div className={`relative h-px mb-8 ${plan.popular ? 'bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent' : 'bg-white/[0.06]'}`} />
+
+                  {/* Features */}
+                  <ul className="relative space-y-3.5 mb-10">
+                    {plan.features.map((f, j) => (
+                      <li key={j} className="flex items-start gap-3 text-sm text-slate-300">
+                        <span className={`shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center ${plan.popular
+                          ? 'bg-fuchsia-500/15 text-fuchsia-300 border border-fuchsia-500/25'
+                          : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                        }`}>
+                          <CheckCircle2 className="w-3 h-3" />
+                        </span>
+                        <span className="leading-snug">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <button
+                    onClick={() => navigate('/admin')}
+                    className={`relative w-full py-4 rounded-2xl font-bold text-base transition-all duration-300 cursor-pointer group flex items-center justify-center gap-2 ${plan.popular
+                      ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white shadow-xl shadow-fuchsia-500/30 hover:shadow-fuchsia-500/50 hover:scale-[1.02]'
+                      : 'bg-white/[0.04] border border-white/[0.1] text-white hover:bg-white/[0.08] hover:border-white/[0.2]'
+                    }`}
+                  >
+                    Get Started
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
