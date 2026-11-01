@@ -345,7 +345,7 @@ export default function LandingPage() {
   const pricing = [
     {
       name: 'Standard Bistro',
-      price: '1,999',
+      price: '499',
       period: '/month',
       desc: 'Perfect for single outlet restaurants getting started.',
       features: ['Digital QR Menu', 'Kitchen Display (KDS)', 'Staff Accounts', 'Basic Analytics', 'Table Management'],
@@ -354,7 +354,7 @@ export default function LandingPage() {
     },
     {
       name: 'Enterprise Dine',
-      price: '4,999',
+      price: '899',
       period: '/month',
       desc: 'Advanced platform for multi-outlet restaurant chains.',
       features: ['Multiple Outlets', 'Advance KDS', 'Promo & Coupons', 'Tax Configuration', 'Custom Branding', 'Priority Support'],
@@ -731,7 +731,7 @@ export default function LandingPage() {
                 className={`price-card relative p-10 rounded-3xl border transition-all duration-500 ${plan.popular
                   ? 'border-fuchsia-500/50 bg-fuchsia-500/[0.03] scale-[1.02] shadow-2xl shadow-fuchsia-500/10'
                   : 'border-white/[0.04] bg-white/[0.02] hover:border-white/[0.1] hover:-translate-y-2'
-                } overflow-hidden`}
+                }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-fuchsia-500 text-slate-900 text-xs font-bold uppercase tracking-widest shadow-lg shadow-fuchsia-500/40">
