@@ -537,7 +537,7 @@ export default function LandingPage() {
               </a>
             </div>
 
-            <div className="hero-stats mt-16 flex flex-wrap items-end justify-center gap-10 md:gap-16 border-t border-white/5 pt-8 w-full max-w-3xl mx-auto">
+            <div className={`hero-stats mt-16 flex flex-wrap items-end justify-center gap-10 md:gap-16 border-t pt-8 w-full max-w-3xl mx-auto ${isDark ? 'border-white/5' : 'border-slate-300'}`}>
               {stats.map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-3xl md:text-4xl font-extrabord font-mono text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
@@ -655,7 +655,7 @@ export default function LandingPage() {
                 'Auto-bill generation on checkout'
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-emerald-400 shrink-0">
+                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${isDark ? 'bg-white/[0.03] border border-white/[0.05] text-emerald-400' : 'bg-slate-100 border border-slate-300 text-emerald-600'}`}>
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
                   <span className="text-slate-300 text-sm">{item}</span>
@@ -863,7 +863,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 overflow-hidden">
           <div className="parallax-bg absolute inset-0 bg-gradient-to-br from-violet-900/30 via-transparent to-transparent" />
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center p-16 rounded-[3rem] bg-gradient-to-br from-violet-900/20 via-fuchsia-900/20 to-transparent border border-white/[0.05] backdrop-blur-xl">
+        <div className={`relative z-10 max-w-4xl mx-auto text-center p-16 rounded-[3rem] backdrop-blur-xl ${isDark ? 'bg-gradient-to-br from-violet-900/20 via-fuchsia-900/20 to-transparent border border-white/[0.05]' : 'bg-gradient-to-br from-violet-100/40 via-fuchsia-100/40 to-transparent border border-slate-200'}`}>
           <h2 className="text-4xl md:text-5xl font-extrabord font-display tracking-tight mb-6">
             Ready To Transform Your Restaurant?
           </h2>
@@ -889,7 +889,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 border-t border-white/[0.05]">
+      <footer className={`py-16 px-6 border-t ${isDark ? 'border-white/[0.05]' : 'border-slate-200'}`}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-3">
@@ -920,7 +920,7 @@ export default function LandingPage() {
                 { icon: <Mail className="w-5 h-5 text-slate-400 hover:text-white transition-colors" />, href: 'mailto:support@menumate.in' },
                 { icon: <Phone className="w-5 h-5 text-slate-400 hover:text-white transition-colors" />, href: 'tel:+919876543210' }
               ].map((contact) => (
-                <a key={contact.href} href={contact.href} className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-all">
+                <a key={contact.href} href={contact.href} className={`p-2 rounded-lg transition-all ${isDark ? 'bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05]' : 'bg-slate-100 border border-slate-300 hover:bg-slate-200'}`}>
                   {contact.icon}
                 </a>
               ))}
