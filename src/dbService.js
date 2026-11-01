@@ -297,6 +297,9 @@ export async function getRestaurant(id) {
   } catch (e) {
     console.warn("Firestore error", e);
   }
+  // Fallback to seed data
+  const seed = SEED_RESTAURANTS.find(r => r.id === id);
+  if (seed) return seed;
   return memRestaurants.find(r => r.id === id) || null;
 }
 
@@ -354,6 +357,20 @@ export async function getCategories(restaurantId) {
   } catch (e) {
     console.warn("Firestore error", e);
   }
+  // Fallback to seed data
+  if (!memCategories[restaurantId] || memCategories[restaurantId].length === 0) {
+    const seed = SEED_CATEGORIES[restaurantId] || [];
+    if (seed.length > 0) {
+      memCategories[restaurantId] = seed.map(c => ({
+        id: c.id,
+        restaurantId: c.restaurantId,
+        name: c.name,
+        order: c.order || 0,
+        createdAt: new Date().toISOString()
+      })).sort((a, b) => (a.order || 0) - (b.order || 0));
+      saveToStorage("categories", memCategories);
+    }
+  }
   return memCategories[restaurantId] || [];
 }
 
@@ -399,6 +416,26 @@ export async function getProducts(restaurantId) {
     }
   } catch (e) {
     console.warn("Firestore error", e);
+  }
+  // Fallback to seed data if Firestore is empty/unavailable
+  if (!memProducts[restaurantId] || memProducts[restaurantId].length === 0) {
+    const seed = SEED_PRODUCTS[restaurantId] || [];
+    if (seed.length > 0) {
+      memProducts[restaurantId] = seed.map(p => ({
+        id: p.id,
+        restaurantId: p.restaurantId,
+        categoryId: p.categoryId,
+        name: p.name,
+        description: p.description || '',
+        price: Number(p.price || 0),
+        imageUrl: p.imageUrl || '',
+        isAvailable: p.isAvailable !== false,
+        isSpecial: !!p.isSpecial,
+        isPopular: !!p.isPopular,
+        createdAt: new Date().toISOString()
+      }));
+      saveToStorage("products", memProducts);
+    }
   }
   return memProducts[restaurantId] || [];
 }
@@ -462,6 +499,19 @@ export async function getTables(restaurantId) {
   } catch (e) {
     console.warn("Firestore error", e);
   }
+  // Fallback to seed data
+  if (!memTables[restaurantId] || memTables[restaurantId].length === 0) {
+    const seed = SEED_TABLES[restaurantId] || [];
+    if (seed.length > 0) {
+      memTables[restaurantId] = seed.map(t => ({
+        id: t.id,
+        restaurantId: t.restaurantId,
+        tableName: t.tableName,
+        createdAt: new Date().toISOString()
+      }));
+      saveToStorage("tables", memTables);
+    }
+  }
   return memTables[restaurantId] || [];
 }
 
@@ -507,6 +557,23 @@ export async function getCoupons(restaurantId) {
     }
   } catch (e) {
     console.warn("Firestore error", e);
+  }
+  // Fallback to seed data
+  if (!memCoupons[restaurantId] || memCoupons[restaurantId].length === 0) {
+    const seed = SEED_COUPONS[restaurantId] || [];
+    if (seed.length > 0) {
+      memCoupons[restaurantId] = seed.map(c => ({
+        id: c.id,
+        restaurantId: c.restaurantId,
+        code: c.code,
+        discountType: c.discountType,
+        discountValue: c.discountValue,
+        minOrderAmount: c.minOrderAmount,
+        isActive: c.isActive,
+        createdAt: new Date().toISOString()
+      }));
+      saveToStorage("coupons", memCoupons);
+    }
   }
   return memCoupons[restaurantId] || [];
 }

@@ -13,7 +13,8 @@ import {
   FiShoppingCart,
   FiShoppingBag,
   FiUser,
-  FiMessageSquare
+  FiMessageSquare,
+  FiCoffee
 } from 'react-icons/fi';
 import { jsPDF } from 'jspdf';
 import { db, storage } from '../firebase.js';
@@ -158,7 +159,9 @@ export default function BillingSystem({
           });
         });
 
-        setCart(aggregatedItems);
+        if (aggregatedItems.length > 0) {
+          setCart(aggregatedItems);
+        }
       }
     }
   }, [selectedTableNumber, orderType, orders, tables]);
@@ -228,9 +231,23 @@ export default function BillingSystem({
     const hasActiveOrders = activeOrders.length > 0;
     
     if (hasActiveOrders) {
-      const subtotalVal = activeOrders.reduce((sum, o) => sum + Number(o.totalAmount || 0), 0);
-      const discountVal = activeOrders.reduce((sum, o) => sum + Number(o.discountAmount || 0), 0);
-      const gstAmountVal = activeOrders.reduce((sum, o) => sum + Number(o.taxAmount || 0), 0);
+      // Start from active order totals
+      const activeSubtotal = activeOrders.reduce((sum, o) => sum + Number(o.totalAmount || 0), 0);
+      const activeDiscount = activeOrders.reduce((sum, o) => sum + Number(o.discountAmount || 0), 0);
+      const activeGst = activeOrders.reduce((sum, o) => sum + Number(o.taxAmount || 0), 0);
+      
+      // Add any manually-added cart items not already represented in active orders
+      const activeItemNames = new Set();
+      activeOrders.forEach(o => o.items?.forEach(it => activeItemNames.add(it.name || it.id)));
+      const extraSubtotal = (itemsList || []).reduce((sum, item) => {
+        if (activeItemNames.has(item.name || item.id)) return sum;
+        return sum + Number(item.price || 0) * Number(item.quantity || 1);
+      }, 0);
+      const extraGst = gstEnabled ? (extraSubtotal * (currentRest?.taxRate ? Number(currentRest.taxRate) : 8)) / 100 : 0;
+      
+      const subtotalVal = activeSubtotal + extraSubtotal;
+      const discountVal = activeDiscount;
+      const gstAmountVal = activeGst + extraGst;
       const serviceChargeAmountVal = serviceChargeEnabled ? (subtotalVal * serviceChargeRate) / 100 : 0;
       const grandTotalVal = Math.max(0, subtotalVal - discountVal + gstAmountVal + serviceChargeAmountVal);
 
@@ -674,7 +691,7 @@ export default function BillingSystem({
                           {catName}
                         </span>
                         <span className="text-sm font-mono font-bold text-fuchsia-500">
-                          ₹{prod.price}
+                          ₹{Number(prod.price || 0)}
                         </span>
                       </div>
 
@@ -1389,9 +1406,23 @@ export function ReusableBillPreviewModal({
     const hasActiveOrders = activeOrders.length > 0;
     
     if (hasActiveOrders) {
-      const subtotalVal = activeOrders.reduce((sum, o) => sum + Number(o.totalAmount || 0), 0);
-      const discountVal = activeOrders.reduce((sum, o) => sum + Number(o.discountAmount || 0), 0);
-      const gstAmountVal = activeOrders.reduce((sum, o) => sum + Number(o.taxAmount || 0), 0);
+      // Start from active order totals
+      const activeSubtotal = activeOrders.reduce((sum, o) => sum + Number(o.totalAmount || 0), 0);
+      const activeDiscount = activeOrders.reduce((sum, o) => sum + Number(o.discountAmount || 0), 0);
+      const activeGst = activeOrders.reduce((sum, o) => sum + Number(o.taxAmount || 0), 0);
+      
+      // Add any manually-added cart items not already represented in active orders
+      const activeItemNames = new Set();
+      activeOrders.forEach(o => o.items?.forEach(it => activeItemNames.add(it.name || it.id)));
+      const extraSubtotal = (itemsList || []).reduce((sum, item) => {
+        if (activeItemNames.has(item.name || item.id)) return sum;
+        return sum + Number(item.price || 0) * Number(item.quantity || 1);
+      }, 0);
+      const extraGst = gstEnabled ? (extraSubtotal * (currentRest?.taxRate ? Number(currentRest.taxRate) : 8)) / 100 : 0;
+      
+      const subtotalVal = activeSubtotal + extraSubtotal;
+      const discountVal = activeDiscount;
+      const gstAmountVal = activeGst + extraGst;
       const serviceChargeAmountVal = serviceChargeEnabled ? (subtotalVal * serviceChargeRate) / 100 : 0;
       const grandTotalVal = Math.max(0, subtotalVal - discountVal + gstAmountVal + serviceChargeAmountVal);
 

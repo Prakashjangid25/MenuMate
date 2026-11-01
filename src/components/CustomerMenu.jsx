@@ -255,7 +255,7 @@ export default function CustomerMenu() {
     if (!prod.isAvailable) return false;
     const matchesCategory = activeCategory === 'all' || prod.categoryId === activeCategory;
     const matchesSearch = prod.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          prod.description.toLowerCase().includes(searchQuery.toLowerCase());
+                          (prod.description || '').toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 

@@ -381,7 +381,7 @@ export default function RestaurantAdmin() {
   const [tables, setTables] = useState([]);
   const [orders, setOrders] = useState([]);
   const [coupons, setCoupons] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isUploadingProductImg, setIsUploadingProductImg] = useState(false);
   const [isUploadingLogoImg, setIsUploadingLogoImg] = useState(false);
   const [showImportMenu, setShowImportMenu] = useState(false);
@@ -562,11 +562,10 @@ export default function RestaurantAdmin() {
     if (user && userRole === 'restaurant_admin' && userRestaurantId) {
       setSelectedRestId(userRestaurantId);
     } else if (user && userRole === 'super_admin') {
-      // Super admins can also view restaurant panel — but they must have a restaurantId set
-      // For super_admin with no restaurantId, show selection or nothing
-      setSelectedRestId(userRestaurantId || null);
+      // Super admins should use the super-admin panel, not restaurant admin
+      navigate('/super-admin');
     }
-  }, [user, userRole, userRestaurantId]);
+  }, [user, userRole, userRestaurantId, navigate]);
 
   // Real-time order notification system states
   const [notificationQueue, setNotificationQueue] = useState([]);
@@ -1888,7 +1887,7 @@ export default function RestaurantAdmin() {
                         <span className="text-[10px] font-bold text-fuchsia-600 uppercase tracking-wide bg-fuchsia-50 px-2 py-0.5 rounded">{catName}</span>
                         <div className="flex justify-between items-center">
                           <h4 className={`font-bold truncate max-w-[180px] ${isDark ? 'text-white' : 'text-slate-900'}`}>{prod.name}</h4>
-                          <span className={`font-mono font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>₹{prod.price.toFixed(2)}</span>
+                          <span className={`font-mono font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>₹{Number(prod.price || 0).toFixed(2)}</span>
                         </div>
                         <p className={`text-xs font-light line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-400'}`}>{prod.description || 'No description provided.'}</p>
                       </div>
@@ -2885,11 +2884,11 @@ export default function RestaurantAdmin() {
                               {it.name}
                             </div>
                             <div className="text-[11px] text-slate-400 font-mono">
-                              ₹{it.price.toFixed(2)} × {it.quantity}
+                              ₹{Number(it.price || 0).toFixed(2)} × {it.quantity}
                             </div>
                           </div>
                           <div className="font-mono font-bold text-slate-900 dark:text-white shrink-0 text-right">
-                            ₹{it.subtotal.toFixed(2)}
+                            ₹{Number(it.subtotal || 0).toFixed(2)}
                           </div>
                         </div>
                       ))}
