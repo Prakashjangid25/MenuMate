@@ -29,132 +29,13 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ── iPhone Mockup Styles (from attached HTML) ──
-const k = 2.5;
-
-const oContainerStyle = {
-  background: 'radial-gradient(ellipse at 50% 40%, #1b1030 0%, #0a0612 60%, #050308 100%)',
-  width: '100%',
-  minHeight: '100vh',
-  padding: '1rem',
-  display: 'flex'
-};
-
-const outlineStyle = {
-  width: `${940 / k}px`,
-  height: `${1904 / k}px`,
-  background: 'linear-gradient(145deg, #8a8a8f 0%, #3a3a3c 45%, #6e6e73 100%)',
-  borderRadius: `${145 / k}px`,
-  position: 'relative',
-  boxShadow: '0 30px 60px rgba(0,0,0,.55), 0 0 0 1px #1c1c1e'
-};
-
-const notchStyle = {
-  position: 'absolute',
-  width: `${285 / k}px`,
-  height: `${84 / k}px`,
-  top: `${45 / k}px`,
-  left: '50%',
-  transform: 'translateX(-50%)',
-  borderRadius: '999px',
-  background: '#000',
-  zIndex: 5
-};
-
-const sideBtnStyle = {
-  position: 'absolute',
-  width: '4px',
-  background: 'linear-gradient(90deg, #5a5a5f, #9a9aa0 55%, #4a4a4e)'
-};
-
-const leftBtnTop = { ...sideBtnStyle, left: '-4px', height: `${64 / k}px`, top: `${308 / k}px`, borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' };
-const leftBtnMiddle = { ...sideBtnStyle, left: '-4px', height: `${130 / k}px`, top: `${438 / k}px`, borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' };
-const leftBtnBottom = { ...sideBtnStyle, left: '-4px', height: `${130 / k}px`, top: `${604 / k}px`, borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' };
-const rightBtn = { ...sideBtnStyle, right: '-4px', height: `${205 / k}px`, top: `${500 / k}px`, borderTopRightRadius: '20px', borderBottomRightRadius: '20px', background: 'linear-gradient(270deg, #5a5a5f, #9a9aa0 55%, #4a4a4e)' };
-
-const inlineStyle = {
-  position: 'absolute',
-  width: `${890 / k}px`,
-  height: `${1865 / k}px`,
-  borderRadius: `${120 / k}px`,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  background: '#000',
-  overflow: 'hidden',
-  zIndex: 2,
-  color: '#fff'
-};
-
-const statusBarStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  height: `${130 / k}px`,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: `6px ${70 / k}px 0 ${85 / k}px`,
-  zIndex: 10,
-  pointerEvents: 'none',
-  background: 'transparent'
-};
-
-const screenContentStyle = {
-  height: '100%',
-  padding: `${130 / k}px 0 ${80 / k}px`,
-  overflowY: 'auto'
-};
-
-const homeIndicatorStyle = {
-  position: 'absolute',
-  bottom: `${18 / k}px`,
-  left: '50%',
-  transform: 'translateX(-50%)',
-  width: `${300 / k}px`,
-  height: '4px',
-  borderRadius: '3px',
-  background: '#fff',
-  opacity: 0.9,
-  zIndex: 20
-};
-
-const appStyle = { padding: '6px 16px 0', display: 'flex', flexDirection: 'column', minHeight: '100%' };
-const appTopStyle = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
-const logoStyle = {
-  width: '34px', height: '34px', borderRadius: '50%',
-  background: 'linear-gradient(135deg, #b44cff, #7a2cff)',
-  display: 'grid', placeItems: 'center'
-};
-const itemStyle = (index) => ({
-  display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px', padding: '10px',
-  background: index % 2 === 0 ? '#0e0e12' : '#0a0a0e',
-  border: '1px solid #1c1c24', borderRadius: '15px'
-});
-const thumbStyle = {
-  width: '42px', height: '42px', borderRadius: '50%', flex: 'none',
-  background: '#2a1a4a', display: 'grid', placeItems: 'center', color: '#a77bff', fontSize: '16px'
-};
-const addStyle = {
-  width: '24px', height: '24px', borderRadius: '50%', background: '#2a1f45',
-  color: '#a77bff', display: 'grid', placeItems: 'center', fontSize: '14px', flex: 'none'
-};
-const cartStyle = {
-  position: 'sticky', bottom: 0, background: '#0e0e12',
-  border: '1px solid #22222c', borderRadius: '20px', padding: '12px 12px 14px', marginTop: '14px'
-};
-const checkoutStyle = {
-  width: '100%', border: 0, borderRadius: '13px', padding: '12px',
-  font: '700 12.5px inherit', color: '#fff', cursor: 'pointer',
-  background: 'linear-gradient(90deg, #7a1fff, #d400d4)'
-};
-
 export default function LandingPage() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   useEffect(() => {
+    let heroSafety;
+    let alignWordGradients;
     const ctx = gsap.context(() => {
       // Navbar - instant visible
       gsap.from('.nav-item', {
@@ -165,50 +46,81 @@ export default function LandingPage() {
         stagger: 0.05
       });
 
-      // Hero - instant visible
+      // Hero - kicker fades in first
       gsap.from('.hero-kicker', {
-        y: 5,
+        y: 14,
         opacity: 0,
-        duration: 0.5,
-        ease: 'power2.out'
+        duration: 0.6,
+        ease: 'power3.out'
       });
 
-      gsap.from('.hero-title-line', {
-        y: 5,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.08,
-        ease: 'power2.out'
+      // Hero title - EK EK WORD reveal hota hai
+      // Har word apna gradient rakhta hai, lekin JS se align karte hain
+      // taaki poori line par ek hi continuous gradient dikhe.
+      alignWordGradients = () => {
+        gsap.utils.toArray('.hero-title > span').forEach((line) => {
+          const words = line.querySelectorAll('.hero-word');
+          if (!words.length) return;
+          const lineWidth = line.getBoundingClientRect().width;
+          if (!lineWidth) return;
+          let offset = 0;
+          words.forEach((w) => {
+            const wWidth = w.getBoundingClientRect().width;
+            w.style.backgroundSize = `${lineWidth}px 100%`;
+            w.style.backgroundPosition = `${-offset}px 0`;
+            offset += wWidth;
+          });
+        });
+      };
+      alignWordGradients();
+      window.addEventListener('resize', alignWordGradients);
+
+      const heroWords = gsap.utils.toArray('.hero-word');
+      gsap.set(heroWords, { y: 44, opacity: 0, filter: 'blur(12px)' });
+      gsap.to(heroWords, {
+        y: 0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: 0.85,
+        ease: 'power3.out',
+        stagger: 0.075,
+        delay: 0.15
       });
 
+      // Hero subtitle
       gsap.from('.hero-subtitle', {
-        y: 5,
+        y: 20,
         opacity: 0,
-        duration: 0.5,
-        ease: 'power2.out'
+        duration: 0.7,
+        delay: 0.55,
+        ease: 'power3.out'
       });
 
+      // Hero CTAs
       gsap.from('.hero-cta-group', {
-        y: 5,
+        y: 20,
         opacity: 0,
-        duration: 0.4,
-        stagger: 0.08,
-        ease: 'power2.out'
+        duration: 0.6,
+        delay: 0.7,
+        stagger: 0.1,
+        ease: 'power3.out'
       });
 
+      // Hero stats
       gsap.from('.hero-stats', {
-        y: 5,
+        y: 20,
         opacity: 0,
-        duration: 0.4,
-        ease: 'power2.out'
+        duration: 0.6,
+        delay: 0.85,
+        ease: 'power3.out'
       });
 
-      gsap.from('.iphone-wrap', {
-        y: 5,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.out'
-      });
+      // Safety net: agar animation kisi wajah se na chale to content invisible na rahe
+      heroSafety = window.setTimeout(() => {
+        const heroSel = '.hero-word, .hero-kicker, .hero-subtitle, .hero-cta-group, .hero-stats';
+        gsap.killTweensOf(heroSel);
+        gsap.set(heroSel, { clearProps: 'opacity,filter,transform' });
+      }, 3000);
 
       // Floating orbs
       gsap.to('.orb-1', {
@@ -351,7 +263,11 @@ export default function LandingPage() {
       });
     });
 
-    return () => ctx.revert();
+    return () => {
+      window.removeEventListener('resize', alignWordGradients);
+      window.clearTimeout(heroSafety);
+      ctx.revert();
+    };
   }, []);
 
   const features = [
@@ -413,6 +329,12 @@ export default function LandingPage() {
     { num: '05', title: 'Smart Bill', desc: 'Generate PDF receipt, print, or send via WhatsApp.' }
   ];
 
+  const heroLines = [
+    { text: 'Elevate Your Restaurant', grad: 'from-white via-violet-400 to-fuchsia-400' },
+    { text: 'To The Future', grad: 'from-violet-400 via-cyan-400 to-blue-400' },
+    { text: 'Of Contactless Dining', white: true }
+  ];
+
   const stats = [
     { value: 500, suffix: '+', label: 'Restaurants Live' },
     { value: 25, suffix: 'K+', label: 'Orders Daily' },
@@ -446,13 +368,6 @@ export default function LandingPage() {
     { q: 'Can I use my own domain?', a: 'Yes. Connect your custom domain and brand MenuMate as your own ordering platform.' },
     { q: 'Is customer data secure?', a: 'Absolutely. All data is encrypted and isolated per restaurant using Firebase Firestore with role-based access.' },
     { q: 'Do you support offline mode?', a: 'MenuMate works online for real-time order sync. Kitchen displays update instantly as orders come in.' }
-  ];
-
-  const menuItems = [
-    { name: 'Truffle Parmesan Fries', price: '249' },
-    { name: 'Pesto Mozzarella Pizza', price: '549' },
-    { name: 'Molten Lava Cake', price: '299' },
-    { name: 'Garden Mint Mojito', price: '189' }
   ];
 
   return (
@@ -560,32 +475,35 @@ export default function LandingPage() {
           backgroundSize: '80px 80px'
         }} />
 
-        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          {/* Left Content */}
-          <div className="flex flex-col justify-center max-w-[560px]">
+        <div className="relative z-10 max-w-5xl mx-auto w-full">
+          {/* Centered Content */}
+          <div className="flex flex-col items-center text-center">
             <div className="hero-kicker inline-flex items-center gap-2 px-5 py-2 rounded-full bg-violet-500/[0.08] border border-violet-500/[0.2] text-violet-400 text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-sm">
               <Zap className="w-3.5 h-3.5" />
               Premium Restaurant SaaS Platform
             </div>
 
             <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl font-extrabord font-display tracking-tight leading-[1.05] mb-8">
-              <span className="block hero-title-line text-transparent bg-clip-text bg-gradient-to-r from-white via-violet-400 to-fuchsia-400">
-                Elevate Your Restaurant
-              </span>
-              <span className="block hero-title-line text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-cyan-400 to-blue-400">
-                To The Future
-              </span>
-              <span className="block hero-title-line text-white">
-                Of Contactless Dining
-              </span>
+              {heroLines.map((line, li) => (
+                <span key={li} className={`block ${line.white ? 'text-white' : 'text-transparent'}`}>
+                  {line.text.split(' ').map((word, wi, arr) => (
+                    <span
+                      key={wi}
+                      className={`hero-word inline-block${line.white ? '' : ` bg-clip-text bg-gradient-to-r ${line.grad}`}`}
+                    >
+                      {word}{wi < arr.length - 1 ? '\u00A0' : ''}
+                    </span>
+                  ))}
+                </span>
+              ))}
             </h1>
 
-            <p className="hero-subtitle text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-10">
+            <p className="hero-subtitle text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-10 max-w-2xl mx-auto">
               A luxury QR-based ordering & management suite built for modern restaurants.
               Contactless menus, real-time kitchen displays, smart billing, and elegant table booking.
             </p>
 
-            <div className="hero-cta-group flex flex-wrap gap-4">
+            <div className="hero-cta-group flex flex-wrap justify-center gap-4">
               <button
                 onClick={() => navigate('/admin')}
                 className="hero-cta px-8 py-4.5 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-lg shadow-2xl shadow-violet-500/40 hover:shadow-violet-500/60 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
@@ -600,7 +518,7 @@ export default function LandingPage() {
               </a>
             </div>
 
-            <div className="hero-stats mt-16 flex items-end gap-8 border-t border-white/5 pt-8">
+            <div className="hero-stats mt-16 flex flex-wrap items-end justify-center gap-10 md:gap-16 border-t border-white/5 pt-8 w-full max-w-3xl mx-auto">
               {stats.map((stat, i) => (
                 <div key={i} className="text-center">
                   <div className="text-3xl md:text-4xl font-extrabord font-mono text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
@@ -609,102 +527,6 @@ export default function LandingPage() {
                   <div className="text-xs text-slate-500 mt-2 uppercase tracking-wider font-medium">{stat.label}</div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Right - iPhone Mockup (from attached HTML file) */}
-          <div className="relative flex items-center justify-center hidden lg:block">
-            <div className="absolute inset-0 bg-gradient-to-br from-violet-900/40 via-transparent to-transparent" />
-            <div className="iphone-wrap relative inline-block z-10 transform scale-95 md:scale-100 transition-transform duration-300">
-              <div style={oContainerStyle}>
-                <div className="iphone-mockup__container">
-                  <div style={outlineStyle} className="iphone-mockup__outline">
-                    {/* Dynamic Island */}
-                    <div style={notchStyle} className="iphone-mockup__notch" />
-
-                    {/* Side Buttons - Left */}
-                    <div style={leftBtnTop} className="iphone-mockup__left-outside-top" />
-                    <div style={leftBtnMiddle} className="iphone-mockup__left-outside-middle" />
-                    <div style={leftBtnBottom} className="iphone-mockup__left-outside-bottom" />
-
-                    {/* Side Button - Right */}
-                    <div style={rightBtn} className="iphone-mockup__right-outside" />
-
-                    {/* Screen */}
-                    <div style={inlineStyle} className="iphone-mockup__inline">
-                      {/* Status Bar */}
-                      <div style={statusBarStyle} className="status-bar">
-                        <span className="time">9:41</span>
-                        <span className="icons">
-                          <svg width="16" height="11" viewBox="0 0 18 12" fill="#fff">
-                            <rect x="0" y="8" width="3" height="4" rx="1" />
-                            <rect x="5" y="5.5" width="3" height="6.5" rx="1" />
-                            <rect x="10" y="3" width="3" height="9" rx="1" />
-                            <rect x="15" y="0" width="3" height="12" rx="1" />
-                          </svg>
-                          <svg width="15" height="11" viewBox="0 0 16 12" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round">
-                            <path d="M1.5 4.2a9 9 0 0 1 13 0" />
-                            <path d="M4 7a5.4 5.4 0 0 1 8 0" />
-                            <circle cx="8" cy="10" r="1" fill="#fff" stroke="none" />
-                          </svg>
-                          <svg width="24" height="12" viewBox="0 0 27 13" fill="none">
-                            <rect x=".5" y=".5" width="22" height="12" rx="3.5" stroke="#fff" opacity="0.4" />
-                            <rect x="2" y="2" width="19" height="9" rx="2.2" fill="#fff" />
-                            <path d="M24.5 4.5v4c.9-.3 1.5-1.1 1.5-2s-.6-1.7-1.5-2Z" fill="#fff" opacity="0.5" />
-                          </svg>
-                        </span>
-                      </div>
-
-                      {/* Screen Content */}
-                      <div style={screenContentStyle} className="screen-content">
-                        <div style={appStyle} className="app">
-                          <div style={appTopStyle} className="app-top">
-                            <div style={logoStyle} className="logo">
-                              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
-                                <rect x="3" y="3" width="18" height="18" rx="3" />
-                                <path d="M3 9h18M9 21V9" />
-                              </svg>
-                            </div>
-                            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#d65cff" strokeWidth="2" strokeLinecap="round">
-                              <path d="M5 7h14l-1 13H6L5 7Z" />
-                              <path d="M9 7a3 3 0 0 1 6 0" />
-                            </svg>
-                          </div>
-                          <h1 className="text-[14px] font-bold font-display mt-[12px]">Gourmet Garden</h1>
-                          <div className="sub text-[10px] text-[#8a86a0] mt-[3px]">Table 4 • Garden View</div>
-
-                          {menuItems.map((item, i) => (
-                            <div key={i} style={itemStyle(i)} className="item">
-                              <div style={thumbStyle} className="thumb">★</div>
-                              <div className="info">
-                                <div className="row">
-                                  <span className="name text-[12px] font-bold">{item.name}</span>
-                                  <span className="price text-[10.5px] text-[#a77bff] font-bold ml-[6px]">₹{item.price}</span>
-                                </div>
-                                <div className="desc text-[9px] text-[#6b6785] mt-[3px]">Artisanal preparation</div>
-                              </div>
-                              <div style={addStyle} className="add">+</div>
-                            </div>
-                          ))}
-
-                          <div style={cartStyle} className="cart">
-                            <div className="r r1 flex justify-between items-center">
-                              <b className="text-[10.5px]">Cart</b><span className="text-[10.5px] text-[#d65cff] font-bold">3 items</span>
-                            </div>
-                            <div className="r r2 mt-[7px] mb-[10px] text-[11.5px] text-[#9a96b0]">
-                              <span>Subtotal</span><b className="ml-[2px] text-[#fff] text-[13px]">₹997</b>
-                            </div>
-                            <button style={checkoutStyle} className="checkout">Checkout</button>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Home Indicator */}
-                      <div style={homeIndicatorStyle} className="home-indicator" />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
