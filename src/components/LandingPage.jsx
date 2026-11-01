@@ -29,6 +29,127 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ── iPhone Mockup Styles (from attached HTML) ──
+const k = 2.5;
+
+const oContainerStyle = {
+  background: 'radial-gradient(ellipse at 50% 40%, #1b1030 0%, #0a0612 60%, #050308 100%)',
+  width: '100%',
+  minHeight: '100vh',
+  padding: '1rem',
+  display: 'flex'
+};
+
+const outlineStyle = {
+  width: `${940 / k}px`,
+  height: `${1904 / k}px`,
+  background: 'linear-gradient(145deg, #8a8a8f 0%, #3a3a3c 45%, #6e6e73 100%)',
+  borderRadius: `${145 / k}px`,
+  position: 'relative',
+  boxShadow: '0 30px 60px rgba(0,0,0,.55), 0 0 0 1px #1c1c1e'
+};
+
+const notchStyle = {
+  position: 'absolute',
+  width: `${285 / k}px`,
+  height: `${84 / k}px`,
+  top: `${45 / k}px`,
+  left: '50%',
+  transform: 'translateX(-50%)',
+  borderRadius: '999px',
+  background: '#000',
+  zIndex: 5
+};
+
+const sideBtnStyle = {
+  position: 'absolute',
+  width: '4px',
+  background: 'linear-gradient(90deg, #5a5a5f, #9a9aa0 55%, #4a4a4e)'
+};
+
+const leftBtnTop = { ...sideBtnStyle, left: '-4px', height: `${64 / k}px`, top: `${308 / k}px`, borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' };
+const leftBtnMiddle = { ...sideBtnStyle, left: '-4px', height: `${130 / k}px`, top: `${438 / k}px`, borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' };
+const leftBtnBottom = { ...sideBtnStyle, left: '-4px', height: `${130 / k}px`, top: `${604 / k}px`, borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px' };
+const rightBtn = { ...sideBtnStyle, right: '-4px', height: `${205 / k}px`, top: `${500 / k}px`, borderTopRightRadius: '20px', borderBottomRightRadius: '20px', background: 'linear-gradient(270deg, #5a5a5f, #9a9aa0 55%, #4a4a4e)' };
+
+const inlineStyle = {
+  position: 'absolute',
+  width: `${890 / k}px`,
+  height: `${1865 / k}px`,
+  borderRadius: `${120 / k}px`,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  background: '#000',
+  overflow: 'hidden',
+  zIndex: 2,
+  color: '#fff'
+};
+
+const statusBarStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  height: `${130 / k}px`,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: `6px ${70 / k}px 0 ${85 / k}px`,
+  zIndex: 10,
+  pointerEvents: 'none',
+  background: 'transparent'
+};
+
+const screenContentStyle = {
+  height: '100%',
+  padding: `${130 / k}px 0 ${80 / k}px`,
+  overflowY: 'auto'
+};
+
+const homeIndicatorStyle = {
+  position: 'absolute',
+  bottom: `${18 / k}px`,
+  left: '50%',
+  transform: 'translateX(-50%)',
+  width: `${300 / k}px`,
+  height: '4px',
+  borderRadius: '3px',
+  background: '#fff',
+  opacity: 0.9,
+  zIndex: 20
+};
+
+const appStyle = { padding: '6px 16px 0', display: 'flex', flexDirection: 'column', minHeight: '100%' };
+const appTopStyle = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
+const logoStyle = {
+  width: '34px', height: '34px', borderRadius: '50%',
+  background: 'linear-gradient(135deg, #b44cff, #7a2cff)',
+  display: 'grid', placeItems: 'center'
+};
+const itemStyle = (index) => ({
+  display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px', padding: '10px',
+  background: index % 2 === 0 ? '#0e0e12' : '#0a0a0e',
+  border: '1px solid #1c1c24', borderRadius: '15px'
+});
+const thumbStyle = {
+  width: '42px', height: '42px', borderRadius: '50%', flex: 'none',
+  background: '#2a1a4a', display: 'grid', placeItems: 'center', color: '#a77bff', fontSize: '16px'
+};
+const addStyle = {
+  width: '24px', height: '24px', borderRadius: '50%', background: '#2a1f45',
+  color: '#a77bff', display: 'grid', placeItems: 'center', fontSize: '14px', flex: 'none'
+};
+const cartStyle = {
+  position: 'sticky', bottom: 0, background: '#0e0e12',
+  border: '1px solid #22222c', borderRadius: '20px', padding: '12px 12px 14px', marginTop: '14px'
+};
+const checkoutStyle = {
+  width: '100%', border: 0, borderRadius: '13px', padding: '12px',
+  font: '700 12.5px inherit', color: '#fff', cursor: 'pointer',
+  background: 'linear-gradient(90deg, #7a1fff, #d400d4)'
+};
+
 export default function LandingPage() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
@@ -44,7 +165,7 @@ export default function LandingPage() {
         stagger: 0.05
       });
 
-      // Hero - instant visible, subtle fade
+      // Hero - instant visible
       gsap.from('.hero-kicker', {
         y: 5,
         opacity: 0,
@@ -327,6 +448,13 @@ export default function LandingPage() {
     { q: 'Do you support offline mode?', a: 'MenuMate works online for real-time order sync. Kitchen displays update instantly as orders come in.' }
   ];
 
+  const menuItems = [
+    { name: 'Truffle Parmesan Fries', price: '249' },
+    { name: 'Pesto Mozzarella Pizza', price: '549' },
+    { name: 'Molten Lava Cake', price: '299' },
+    { name: 'Garden Mint Mojito', price: '189' }
+  ];
+
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white font-sans overflow-x-hidden selection:bg-violet-500/30 selection:text-white">
       {/* Cursor Glow */}
@@ -484,132 +612,97 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right - Realistic iPhone 15 Pro Frame */}
+          {/* Right - iPhone Mockup (from attached HTML file) */}
           <div className="relative flex items-center justify-center hidden lg:block">
-            {/* Dark gradient background behind phone */}
             <div className="absolute inset-0 bg-gradient-to-br from-violet-900/40 via-transparent to-transparent" />
-
-            {/* iPhone Container */}
             <div className="iphone-wrap relative inline-block z-10 transform scale-95 md:scale-100 transition-transform duration-300">
-              {/* iPhone Frame: 393x852, radius 55px, titanium border */}
-              <div className="iphone relative w-[393px] h-[852px] rounded-[55px] bg-[linear-gradient(145deg,#8a8a8f,#3a3a3c,#6e6e73)] p-[2px] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
+              <div style={oContainerStyle}>
+                <div className="iphone-mockup__container">
+                  <div style={outlineStyle} className="iphone-mockup__outline">
+                    {/* Dynamic Island */}
+                    <div style={notchStyle} className="iphone-mockup__notch" />
 
-                {/* Side Buttons - Left: touches edge at left: -3px */}
-                <div className="absolute left-[-3px] top-1/2 -translate-y-1/2 flex flex-col gap-[15px] pointer-events-none">
-                  <div className="w-[3px] h-[28px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" /> {/* action */}
-                  <div className="w-[3px] h-[55px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" /> {/* vol up */}
-                  <div className="w-[3px] h-[55px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" /> {/* vol down */}
-                </div>
+                    {/* Side Buttons - Left */}
+                    <div style={leftBtnTop} className="iphone-mockup__left-outside-top" />
+                    <div style={leftBtnMiddle} className="iphone-mockup__left-outside-middle" />
+                    <div style={leftBtnBottom} className="iphone-mockup__left-outside-bottom" />
 
-                {/* Side Button - Right: touches edge at right: -3px */}
-                <div className="absolute right-[-3px] top-[30%] w-[3px] h-[90px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full pointer-events-none" />
+                    {/* Side Button - Right */}
+                    <div style={rightBtn} className="iphone-mockup__right-outside" />
 
-                {/* Phone Screen: inset 10px, radius 45px, overflow hidden, bg #000 */}
-                <div className="phone-screen absolute inset-[10px] rounded-[45px] overflow-hidden bg-[#000]">
-
-                  {/* Dynamic Island: single pill, EMPTY, z-index above everything */}
-                  <div className="dynamic-island absolute top-[11px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-[#000] rounded-[20px] z-50">
-                    {/* Tiny camera lens on right side of pill */}
-                    <div className="absolute right-[14px] top-1/2 -translate-y-1/2 w-[12px] h-[12px] rounded-full bg-[#0a0a0f] border border-white/5">
-                      <div className="absolute inset-0 w-full h-full rounded-full bg-[radial-gradient(circle_at_center,#0000ff30,transparent)] opacity-40 pointer-events-none" />
-                    </div>
-                  </div>
-
-                  {/* Status Bar: transparent, absolute top:0, height 54px, z-index 10 */}
-                  <div className="status-bar absolute top-0 left-0 right-0 h-[54px] bg-transparent z-40 flex items-center justify-between px-4 pointer-events-none">
-                    <div className="pl-4 flex items-center gap-2">
-                      <span className="text-[16px] font-[600] text-white">9:41</span>
-                    </div>
-                    <div className="pr-4 flex items-center gap-1">
-                      {/* Signal */}
-                      <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M22 12h-4l-3 3 L9 7l-1 1 4 6 2-2" />
-                      </svg>
-                      {/* Wifi */}
-                      <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 18a.4.4 0 000 .8" />
-                      </svg>
-                      {/* Battery */}
-                      <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="2" y="7" width="20" height="10" rx="2" ry="2" />
-                        <path d="M22 12h-2" />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* Screen Content: padding-top 54px, scroll, hidden scrollbar */}
-                  <div className="screen-content relative z-0 w-full h-full pt-[54px] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                    {/* Glass glare overlay */}
-                    <div className="absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent)] pointer-events-none" />
-
-                    {/* Existing App UI - unchanged */}
-                    <div className="relative z-0 w-full h-full">
-                      {/* Header */}
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20">
-                          <Layout className="text-white text-sm" />
-                        </div>
-                        <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
-                          <ShoppingBag className="text-fuchsia-400 text-xs" />
-                        </div>
+                    {/* Screen */}
+                    <div style={inlineStyle} className="iphone-mockup__inline">
+                      {/* Status Bar */}
+                      <div style={statusBarStyle} className="status-bar">
+                        <span className="time">9:41</span>
+                        <span className="icons">
+                          <svg width="16" height="11" viewBox="0 0 18 12" fill="#fff">
+                            <rect x="0" y="8" width="3" height="4" rx="1" />
+                            <rect x="5" y="5.5" width="3" height="6.5" rx="1" />
+                            <rect x="10" y="3" width="3" height="9" rx="1" />
+                            <rect x="15" y="0" width="3" height="12" rx="1" />
+                          </svg>
+                          <svg width="15" height="11" viewBox="0 0 16 12" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round">
+                            <path d="M1.5 4.2a9 9 0 0 1 13 0" />
+                            <path d="M4 7a5.4 5.4 0 0 1 8 0" />
+                            <circle cx="8" cy="10" r="1" fill="#fff" stroke="none" />
+                          </svg>
+                          <svg width="24" height="12" viewBox="0 0 27 13" fill="none">
+                            <rect x=".5" y=".5" width="22" height="12" rx="3.5" stroke="#fff" opacity="0.4" />
+                            <rect x="2" y="2" width="19" height="9" rx="2.2" fill="#fff" />
+                            <path d="M24.5 4.5v4c.9-.3 1.5-1.1 1.5-2s-.6-1.7-1.5-2Z" fill="#fff" opacity="0.5" />
+                          </svg>
+                        </span>
                       </div>
 
-                      <div className="flex-1 space-y-3 overflow-y-auto no-scrollbar pr-2">
-                        <div className="space-y-2 mb-2">
-                          <h3 className="font-bold text-white text-sm tracking-tight truncate">Gourmet Garden</h3>
-                          <p className="text-[11px] text-slate-400 line-clamp-1">Table 4 • Garden View</p>
-                        </div>
+                      {/* Screen Content */}
+                      <div style={screenContentStyle} className="screen-content">
+                        <div style={appStyle} className="app">
+                          <div style={appTopStyle} className="app-top">
+                            <div style={logoStyle} className="logo">
+                              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
+                                <rect x="3" y="3" width="18" height="18" rx="3" />
+                                <path d="M3 9h18M9 21V9" />
+                              </svg>
+                            </div>
+                            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#d65cff" strokeWidth="2" strokeLinecap="round">
+                              <path d="M5 7h14l-1 13H6L5 7Z" />
+                              <path d="M9 7a3 3 0 0 1 6 0" />
+                            </svg>
+                          </div>
+                          <h1 className="text-[14px] font-bold font-display mt-[12px]">Gourmet Garden</h1>
+                          <div className="sub text-[10px] text-[#8a86a0] mt-[3px]">Table 4 • Garden View</div>
 
-                        <div className="flex-1 overflow-y-auto no-scrollbar pr-2 space-y-3">
-                          {[
-                            { name: 'Truffle Parmesan Fries', price: '249', pop: true },
-                            { name: 'Pesto Mozzarella Pizza', price: '549', pop: true },
-                            { name: 'Molten Lava Cake', price: '299', pop: false },
-                            { name: 'Garden Mint Mojito', price: '189', pop: true }
-                          ].map((item, i) => (
-                            <div
-                              key={i}
-                              className={`flex items-center justify-between p-3 rounded-xl ${i % 2 === 0 ? 'bg-white/[0.03] border border-white/[0.05]' : 'bg-white/[0.02] border border-white/[0.03]'} hover:bg-white/[0.05] transition-colors duration-300 cursor-pointer`}
-                            >
-                              <div className="flex items-center gap-3 flex-1 min-w-0">
-                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10 shrink-0">
-                                  <Star className="text-violet-400 text-xs fill-violet-400" />
+                          {menuItems.map((item, i) => (
+                            <div key={i} style={itemStyle(i)} className="item">
+                              <div style={thumbStyle} className="thumb">★</div>
+                              <div className="info">
+                                <div className="row">
+                                  <span className="name text-[12px] font-bold">{item.name}</span>
+                                  <span className="price text-[10.5px] text-[#a77bff] font-bold ml-[6px]">₹{item.price}</span>
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                  <div className="flex justify-between items-baseline mb-0.5">
-                                    <h4 className="font-semibold text-sm text-white truncate">{item.name}</h4>
-                                    <span className="text-violet-400 font-mono text-xs font-bold">₹{item.price}</span>
-                                  </div>
-                                  <p className="text-[10px] text-slate-500 line-clamp-1 truncate">Artisanal preparation</p>
-                                </div>
+                                <div className="desc text-[9px] text-[#6b6785] mt-[3px]">Artisanal preparation</div>
                               </div>
-                              <button className="w-7 h-7 rounded-full bg-violet-500/20 hover:bg-violet-500/30 flex items-center justify-center text-violet-400 text-xs transition-all">
-                                <PlusIcon className="w-3 h-3" />
-                              </button>
+                              <div style={addStyle} className="add">+</div>
                             </div>
                           ))}
+
+                          <div style={cartStyle} className="cart">
+                            <div className="r r1 flex justify-between items-center">
+                              <b className="text-[10.5px]">Cart</b><span className="text-[10.5px] text-[#d65cff] font-bold">3 items</span>
+                            </div>
+                            <div className="r r2 mt-[7px] mb-[10px] text-[11.5px] text-[#9a96b0]">
+                              <span>Subtotal</span><b className="ml-[2px] text-[#fff] text-[13px]">₹997</b>
+                            </div>
+                            <button style={checkoutStyle} className="checkout">Checkout</button>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Bottom Cart - with padding for home indicator */}
-                      <div className="mt-4 p-4 rounded-2xl bg-white/[0.05] border border-white/[0.1] shrink-0 mb-[16px]">
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-xs font-bold text-white tracking-tight">Cart</span>
-                          <span className="text-xs font-bold text-fuchsia-400">3 items</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm text-slate-400 mb-3">
-                          <span>Subtotal</span>
-                          <span className="text-white font-bold">₹997</span>
-                        </div>
-                        <button className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-sm shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all">
-                          Checkout
-                        </button>
-                      </div>
+                      {/* Home Indicator */}
+                      <div style={homeIndicatorStyle} className="home-indicator" />
                     </div>
                   </div>
-
-                  {/* Home Indicator */}
-                  <div className="home-indicator absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[134px] h-[5px] bg-white/[0.9] rounded-[3px] z-50 pointer-events-none" />
                 </div>
               </div>
             </div>
@@ -926,15 +1019,5 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
-  );
-}
-
-// ── Helper Icons ──
-function PlusIcon({ className = '', ...props }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
-      <line x1="12" y1="5" x2="12" y2="19" />
-      <line x1="5" y1="12" x2="19" y2="12" />
-    </svg>
   );
 }
