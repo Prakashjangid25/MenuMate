@@ -463,7 +463,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <section className="relative min-h-screen flex flex-col justify-center pt-20 pb-16 px-6 overflow-hidden">
+      <section className="relative min-h-screen flex flex-col justify-center pt-20 pb-16 px-6 overflow-x-hidden overflow-y-visible">
         <div className="absolute inset-0 overflow-hidden">
           <div className="orb-1 absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-violet-600/20 blur-[160px] pointer-events-none" />
           <div className="orb-2 absolute bottom-[-10%] right-[-10%] w-[700px] h-[700px] rounded-full bg-fuchsia-600/15 blur-[180px] pointer-events-none" />
@@ -533,7 +533,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-24 px-6 relative overflow-hidden reveal">
+      <section id="features" className="py-24 px-6 relative overflow-x-hidden reveal">
         <div className="absolute inset-0 overflow-hidden">
           <div className="parallax-bg absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-violet-900/20 via-transparent to-transparent -mt-[20%]" />
         </div>
@@ -607,7 +607,7 @@ export default function LandingPage() {
       </section>
 
       {/* Table Booking */}
-      <section id="booking" className="py-24 px-6 relative overflow-hidden reveal">
+      <section id="booking" className="py-24 px-6 relative overflow-x-hidden overflow-y-visible reveal">
         <div className="absolute inset-0 overflow-hidden">
           <div className="parallax-bg absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/10 via-transparent to-transparent" />
         </div>
@@ -706,7 +706,7 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-24 px-6 relative overflow-hidden reveal">
+      <section id="pricing" className="py-24 px-6 relative overflow-x-hidden reveal">
         <div className="absolute inset-0 overflow-hidden">
           <div className="parallax-bg absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-900/10 via-transparent to-transparent" />
         </div>
@@ -798,7 +798,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 relative overflow-hidden">
+      <section className="py-24 px-6 relative overflow-x-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="parallax-bg absolute inset-0 bg-gradient-to-br from-violet-900/30 via-transparent to-transparent" />
         </div>
