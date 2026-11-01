@@ -740,7 +740,7 @@ export default function LandingPage() {
                 )}
                 <h3 className="text-xl font-bold font-display mb-2">{plan.name}</h3>
                 <div className="flex items-baseline gap-1 mb-8">
-                  <span className="text-4xl md:text-5xl font-extrabord font-mono text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">{plan.price}</span>
+                  <span className="text-4xl md:text-5xl font-extrabord font-mono text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">₹{plan.price}</span>
                   <span className="text-slate-500 text-sm">{plan.period}</span>
                 </div>
                 <p className="text-sm text-slate-400 font-light mb-8">{plan.desc}</p>
