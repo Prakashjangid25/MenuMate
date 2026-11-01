@@ -35,57 +35,57 @@ export default function LandingPage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Navbar - subtle entry
+      // Navbar - instant visible
       gsap.from('.nav-item', {
         y: -10,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.5,
         ease: 'power2.out',
         stagger: 0.05
       });
 
-      // Hero - instant visible, subtle animation
+      // Hero - instant visible, subtle fade
       gsap.from('.hero-kicker', {
-        y: 10,
+        y: 5,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.5,
         ease: 'power2.out'
       });
 
       gsap.from('.hero-title-line', {
-        y: 10,
+        y: 5,
         opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
+        duration: 0.5,
+        stagger: 0.08,
         ease: 'power2.out'
       });
 
       gsap.from('.hero-subtitle', {
-        y: 10,
+        y: 5,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.5,
         ease: 'power2.out'
       });
 
       gsap.from('.hero-cta-group', {
-        y: 10,
+        y: 5,
         opacity: 0,
-        duration: 0.5,
-        stagger: 0.1,
+        duration: 0.4,
+        stagger: 0.08,
         ease: 'power2.out'
       });
 
       gsap.from('.hero-stats', {
-        y: 10,
+        y: 5,
         opacity: 0,
-        duration: 0.5,
+        duration: 0.4,
         ease: 'power2.out'
       });
 
       gsap.from('.iphone-wrap', {
-        y: 10,
+        y: 5,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.5,
         ease: 'power2.out'
       });
 
@@ -484,99 +484,135 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right - Realistic iPhone Mockup with Dynamic Island */}
+          {/* Right - Realistic iPhone 15 Pro Frame */}
           <div className="relative flex items-center justify-center hidden lg:block">
-            {/* Shadow */}
-            <div className="absolute inset-0 w-full h-full bg-black/60 blur-[80px] rounded-[3rem] opacity-50 animate-pulse" style={{ animationDuration: '4s' }} />
+            {/* Dark gradient background behind phone */}
+            <div className="absolute inset-0 bg-gradient-to-br from-violet-900/40 via-transparent to-transparent" />
 
-            {/* iPhone Frame - Fixed size */}
-            <div className="iphone-wrap relative inline-block z-10">
-              <div className="relative w-[290px] h-[640px] rounded-[3.5rem] border-[4px] border-white/10 bg-black shadow-2xl shadow-violet-500/20 overflow-hidden">
-                {/* Dynamic Island Area */}
-                <div className="absolute top-0 left-0 right-0 h-[56px] bg-black z-30">
-                  {/* Dynamic Island Pill */}
-                  <div className="absolute top-[12px] left-1/2 -translate-x-1/2 w-[135px] h-[36px] bg-[#1a1a1a] border border-white/10 rounded-full flex items-center justify-center gap-2 shadow-xl z-10">
-                    <div className="w-2 h-2 rounded-full bg-white/40" />
-                    <div className="w-2 h-2 rounded-full bg-white/40" />
-                    <div className="w-3 h-3 rounded-full bg-white/30" />
-                  </div>
-                  {/* Top bezel speaker grill */}
-                  <div className="absolute top-[8px] left-[calc(50%-85px)] w-[170px] h-[1px] bg-white/10 rounded-full" />
-                </div>
+            {/* iPhone Container - centered with scale for smaller screens */}
+            <div className="iphone-wrap relative inline-block z-10 transform scale-95 md:scale-100 transition-transform duration-300">
 
-                {/* Status Bar */}
-                <div className="absolute top-[24px] left-6 right-6 flex justify-between items-center z-20 pointer-events-none">
-                  <div className="flex gap-1 text-[10px] text-slate-400">
-                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
-                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '200ms' }} />
-                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '400ms' }} />
-                  </div>
-                  <span className="text-[10px] font-medium text-slate-300">9:41</span>
-                  <div className="flex gap-0.5 text-[10px] text-slate-400">
-                    <div className="w-1 h-4 bg-slate-600 rounded" />
-                    <div className="w-1 h-3.5 bg-slate-600 rounded" />
-                    <div className="w-1 h-3 bg-slate-600 rounded" />
-                  </div>
-                </div>
+              {/* Side Buttons - Left */}
+              <div className="absolute left-[-12px] top-1/2 -translate-y-1/2 flex flex-col gap-[15px] pointer-events-none">
+                <div className="w-[3px] h-[28px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" />
+                <div className="w-[3px] h-[55px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" />
+                <div className="w-[3px] h-[55px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full" />
+              </div>
 
-                {/* Screen content */}
-                <div className="absolute inset-0 p-5 pt-[70px] overflow-hidden flex flex-col w-full h-full">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20">
-                      <Layout className="text-white text-sm" />
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
-                      <ShoppingBag className="text-fuchsia-400 text-xs" />
+              {/* Side Button - Right (Power) */}
+              <div className="absolute right-[-12px] top-[30%] w-[3px] h-[90px] bg-gradient-to-b from-[#8a8a8f] to-[#3a3a3c] rounded-full pointer-events-none" />
+
+              {/* Titanium Frame Wrapper */}
+              <div className="relative w-[397px] h-[856px] rounded-[57px] bg-[linear-gradient(145deg,#8a8a8f,#3a3a3c,#6e6e73)] p-[2px] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
+                {/* Phone Body */}
+                <div className="relative w-full h-full rounded-[55px] bg-black overflow-hidden">
+
+                  {/* Dynamic Island Area (top bezel) */}
+                  <div className="absolute top-0 left-0 right-0 h-[20px] bg-[#000] z-30" />
+
+                  {/* Dynamic Island - pure black pill, EMPTY */}
+                  <div className="absolute top-[11px] left-1/2 -translate-x-1/2 w-[126px] h-[37px] bg-[#000] rounded-[20px] z-40">
+                    {/* Tiny camera lens on right side of pill */}
+                    <div className="absolute right-[14px] top-1/2 -translate-y-1/2 w-[12px] h-[12px] rounded-full bg-[#0a0a0f] border border-white/5">
+                      <div className="absolute inset-0 w-full h-full rounded-full bg-[radial-gradient(circle_at_center,#0000ff30,transparent)] opacity-40 pointer-events-none" />
                     </div>
                   </div>
 
-                  <div className="flex-1 overflow-hidden flex flex-col">
-                    <div className="space-y-2 mb-2">
-                      <h3 className="font-bold text-white text-sm tracking-tight truncate">Gourmet Garden</h3>
-                      <p className="text-[11px] text-slate-400 line-clamp-1">Table 4 • Garden View</p>
+                  {/* Status Bar */}
+                  <div className="absolute top-[37px] left-6 right-6 h-[54px] bg-[#000] z-20 flex items-center justify-between px-2 pointer-events-none">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[16px] font-semibold text-white">9:41</span>
                     </div>
+                    <div className="flex items-center gap-1">
+                      {/* Signal */}
+                      <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M22 12h-4l-3 3 L9 7l-1 1 4 6 2-2" />
+                      </svg>
+                      {/* Wifi */}
+                      <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 18a.4.4 0 000 .8" />
+                      </svg>
+                      {/* Battery */}
+                      <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="2" y="7" width="20" height="10" rx="2" ry="2" />
+                        <path d="M22 12h-2" />
+                      </svg>
+                    </div>
+                  </div>
 
-                    <div className="flex-1 overflow-y-auto no-scrollbar pr-2 space-y-3">
-                      {[
-                        { name: 'Truffle Parmesan Fries', price: '249', pop: true },
-                        { name: 'Pesto Mozzarella Pizza', price: '549', pop: true },
-                        { name: 'Molten Lava Cake', price: '299', pop: false },
-                        { name: 'Garden Mint Mojito', price: '189', pop: true }
-                      ].map((item, i) => (
-                        <div key={i} className={`flex items-center justify-between p-3 rounded-xl ${i % 2 === 0 ? 'bg-white/[0.03] border border-white/[0.05]' : 'bg-white/[0.02] border border-white/[0.03]'} hover:bg-white/[0.05] transition-colors duration-300 cursor-pointer`}>
-                          <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10 shrink-0">
-                              <Star className="text-violet-400 text-xs fill-violet-400" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex justify-between items-baseline mb-0.5">
-                                <h4 className="font-semibold text-sm text-white truncate">{item.name}</h4>
-                                <span className="text-violet-400 font-mono text-xs font-bold">₹{item.price}</span>
-                              </div>
-                              <p className="text-[10px] text-slate-500 line-clamp-1 truncate">Artisanal preparation</p>
-                            </div>
-                          </div>
-                          <button className="w-7 h-7 rounded-full bg-violet-500/20 hover:bg-violet-500/30 flex items-center justify-center text-violet-400 text-xs transition-all">
-                            <PlusIcon className="w-3 h-3" />
-                          </button>
+                  {/* Screen Content */}
+                  <div className="screen-content relative z-0 w-full h-full pt-[54px] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    {/* Glass glare overlay */}
+                    <div className="absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent)] pointer-events-none" />
+
+                    {/* Existing App Content - unchanged */}
+                    <div className="relative z-0 w-full h-full">
+                      {/* Header */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20">
+                          <Layout className="text-white text-sm" />
                         </div>
-                      ))}
+                        <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                          <ShoppingBag className="text-fuchsia-400 text-xs" />
+                        </div>
+                      </div>
+
+                      <div className="flex-1 space-y-3 overflow-y-auto no-scrollbar pr-2">
+                        <div className="space-y-2 mb-2">
+                          <h3 className="font-bold text-white text-sm tracking-tight truncate">Gourmet Garden</h3>
+                          <p className="text-[11px] text-slate-400 line-clamp-1">Table 4 • Garden View</p>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto no-scrollbar pr-2 space-y-3">
+                          {[
+                            { name: 'Truffle Parmesan Fries', price: '249', pop: true },
+                            { name: 'Pesto Mozzarella Pizza', price: '549', pop: true },
+                            { name: 'Molten Lava Cake', price: '299', pop: false },
+                            { name: 'Garden Mint Mojito', price: '189', pop: true }
+                          ].map((item, i) => (
+                            <div
+                              key={i}
+                              className={`flex items-center justify-between p-3 rounded-xl ${i % 2 === 0 ? 'bg-white/[0.03] border border-white/[0.05]' : 'bg-white/[0.02] border border-white/[0.03]'} hover:bg-white/[0.05] transition-colors duration-300 cursor-pointer`}
+                            >
+                              <div className="flex items-center gap-3 flex-1 min-w-0">
+                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10 shrink-0">
+                                  <Star className="text-violet-400 text-xs fill-violet-400" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex justify-between items-baseline mb-0.5">
+                                    <h4 className="font-semibold text-sm text-white truncate">{item.name}</h4>
+                                    <span className="text-violet-400 font-mono text-xs font-bold">₹{item.price}</span>
+                                  </div>
+                                  <p className="text-[10px] text-slate-500 line-clamp-1 truncate">Artisanal preparation</p>
+                                </div>
+                              </div>
+                              <button className="w-7 h-7 rounded-full bg-violet-500/20 hover:bg-violet-500/30 flex items-center justify-center text-violet-400 text-xs transition-all">
+                                <PlusIcon className="w-3 h-3" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Bottom Cart - with padding for home indicator */}
+                      <div className="mt-4 p-4 rounded-2xl bg-white/[0.05] border border-white/[0.1] shrink-0 mb-[16px]">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-xs font-bold text-white tracking-tight">Cart</span>
+                          <span className="text-xs font-bold text-fuchsia-400">3 items</span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm text-slate-400 mb-3">
+                          <span>Subtotal</span>
+                          <span className="text-white font-bold">₹997</span>
+                        </div>
+                        <button className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-sm shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all">
+                          Checkout
+                        </button>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="mt-4 p-4 rounded-2xl bg-white/[0.05] border border-white/[0.1] shrink-0">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-bold text-white tracking-tight">Cart</span>
-                      <span className="text-xs font-bold text-fuchsia-400">3 items</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm text-slate-400 mb-3">
-                      <span>Subtotal</span>
-                      <span className="text-white font-bold">₹997</span>
-                    </div>
-                    <button className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-sm shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all">
-                      Checkout
-                    </button>
-                  </div>
+                  {/* Home Indicator */}
+                  <div className="absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[134px] h-[5px] bg-white/[0.9] rounded-[3px] z-50 pointer-events-none" />
                 </div>
               </div>
             </div>
