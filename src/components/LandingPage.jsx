@@ -35,6 +35,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function LandingPage() {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   useEffect(() => {
@@ -375,7 +376,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white font-sans overflow-x-hidden selection:bg-violet-500/30 selection:text-white">
+    <div className={`min-h-screen font-sans overflow-x-hidden selection:bg-violet-500/30 selection:text-white ${isDark ? 'bg-[#0a0a0f] text-white' : 'bg-slate-50 text-slate-900'}`}>
       {/* Cursor Glow */}
       <div className="fixed top-0 left-0 z-[-1] w-[600px] h-[600px] rounded-full bg-violet-500/10 blur-[120px] pointer-events-none cursor-glow" />
 
@@ -418,7 +419,7 @@ export default function LandingPage() {
             </button>
             <a
               href="#pricing"
-              className="px-5 py-2.5 rounded-2xl border border-white/10 bg-white/5 text-sm font-semibold text-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
+              className={`px-5 py-2.5 rounded-2xl border text-sm font-semibold flex items-center gap-2 transition-all duration-300 ${isDark ? 'border-white/10 bg-white/5 text-white hover:bg-white/10' : 'border-slate-300 bg-slate-100 text-slate-900 hover:bg-slate-200'}`}
             >
               <Zap className="w-4 h-4 text-violet-400" /> Get Started
             </a>
@@ -432,14 +433,14 @@ export default function LandingPage() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-white hover:bg-white/[0.05] transition-all"
+            className={`md:hidden p-2.5 rounded-xl transition-all ${isDark ? 'bg-white/[0.03] border border-white/10 text-white hover:bg-white/[0.05]' : 'bg-slate-100 border border-slate-300 text-slate-900 hover:bg-slate-200'}`}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
         {mobileMenuOpen && (
-          <div className="fixed inset-0 z-40 bg-[#0a0a0f]/95 backdrop-blur-2xl">
+          <div className={`fixed inset-0 z-40 backdrop-blur-2xl ${isDark ? 'bg-[#0a0a0f]/95' : 'bg-slate-50/95'}`}>
             <div className="absolute top-6 right-6 flex items-center gap-2">
               <button
                 onClick={toggleTheme}
@@ -503,7 +504,7 @@ export default function LandingPage() {
 
             <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl font-extrabord font-display tracking-tight leading-[1.05] mb-8">
               {heroLines.map((line, li) => (
-                <span key={li} className={`block ${line.white ? 'text-white' : 'text-transparent'}`}>
+                <span key={li} className={`block ${line.white ? (isDark ? 'text-white' : 'text-slate-900') : 'text-transparent'}`}>
                   {line.text.split(' ').map((word, wi, arr) => (
                     <span
                       key={wi}
@@ -574,7 +575,7 @@ export default function LandingPage() {
             {features.map((f, i) => (
               <div
                 key={i}
-                className={`feat-card group relative p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.1] hover:bg-white/[0.04] transition-all duration-500 hover:-translate-y-2 overflow-hidden`}
+                className={`feat-card group relative p-8 rounded-3xl ${isDark ? 'bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.1] hover:bg-white/[0.04]' : 'bg-slate-900/[0.04] border border-slate-900/[0.08] hover:border-slate-900/[0.15] hover:bg-slate-900/[0.06]'} transition-all duration-500 hover:-translate-y-2 overflow-hidden`}
               >
                 <div className={`${f.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-[0_0_40px_rgba(99,102,241,0.15)] shrink-0 w-14 h-14 rounded-2xl`}>
                   {f.icon}
@@ -608,7 +609,7 @@ export default function LandingPage() {
             {steps.map((step, i) => (
               <div
                 key={i}
-                className={`step-item group relative flex items-center gap-8 p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500 overflow-hidden`}
+                className={`step-item group relative flex items-center gap-8 p-8 rounded-3xl ${isDark ? 'bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08]' : 'bg-slate-900/[0.04] border border-slate-900/[0.08] hover:border-slate-900/[0.15]'} transition-all duration-500 overflow-hidden`}
               >
                 <div className="shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-extrabord text-xl font-mono shadow-2xl shadow-violet-500/30 group-hover:scale-110 transition-transform duration-500">
                   {step.num}
@@ -680,7 +681,7 @@ export default function LandingPage() {
               ].map((t, i) => (
                 <div
                   key={i}
-                  className="group relative p-6 rounded-3xl bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl border border-white/[0.1] hover:border-white/[0.25] transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl overflow-hidden"
+                  className={`group relative p-6 rounded-3xl backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl overflow-hidden ${isDark ? 'bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-white/[0.1] hover:border-white/[0.25]' : 'bg-gradient-to-br from-slate-900/[0.06] to-slate-900/[0.02] border border-slate-900/[0.1] hover:border-slate-900/[0.25]'}`}
                 >
                   {/* Top accent gradient line */}
                   <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r ${t.color} opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -703,7 +704,7 @@ export default function LandingPage() {
                   </div>
 
                   {/* Title */}
-                  <h4 className="relative font-bold text-base text-white tracking-tight mb-1">{t.name}</h4>
+                  <h4 className={`relative font-bold text-base ${isDark ? 'text-white' : 'text-slate-900'} tracking-tight mb-1`}>{t.name}</h4>
                   <p className="relative text-xs text-slate-400 font-medium">{t.sub}</p>
 
                   {/* Bottom QR hint */}
@@ -760,7 +761,7 @@ export default function LandingPage() {
                 <div
                   className={`relative h-full p-8 md:p-10 rounded-3xl border backdrop-blur-xl transition-all duration-500 overflow-visible ${plan.popular
                     ? 'border-fuchsia-500/40 bg-gradient-to-br from-fuchsia-500/[0.08] via-violet-500/[0.05] to-transparent shadow-2xl shadow-fuchsia-500/20 hover:shadow-fuchsia-500/30'
-                    : 'border-white/[0.08] bg-gradient-to-br from-white/[0.05] to-white/[0.01] hover:border-white/[0.18] hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1'
+                    : `${isDark ? 'border-white/[0.08] bg-gradient-to-br from-white/[0.05] to-white/[0.01] hover:border-white/[0.18] hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1' : 'border-slate-900/[0.08] bg-gradient-to-br from-slate-900/[0.05] to-slate-900/[0.01] hover:border-slate-900/[0.18] hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1'}`
                   }`}
                 >
                   {/* Corner glow for popular */}
@@ -770,7 +771,7 @@ export default function LandingPage() {
 
                   {/* Plan name */}
                   <div className="relative flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-bold font-display text-white">{plan.name}</h3>
+                    <h3 className={`text-xl font-bold font-display ${isDark ? 'text-white' : 'text-slate-900'}`}>{plan.name}</h3>
                     {plan.popular && (
                       <span className="text-[10px] font-bold uppercase tracking-widest text-fuchsia-300 bg-fuchsia-500/10 border border-fuchsia-500/20 px-2.5 py-1 rounded-full">
                         Best Value
@@ -845,9 +846,9 @@ export default function LandingPage() {
 
           <div className="space-y-4">
             {faqs.map((faq, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-300 group overflow-hidden">
+              <div key={i} className={`p-6 rounded-2xl ${isDark ? 'bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08]' : 'bg-slate-900/[0.04] border border-slate-900/[0.08] hover:border-slate-900/[0.15]'} transition-all duration-300 group overflow-hidden`}>
                 <div className="flex justify-between items-center mb-3 cursor-pointer">
-                  <h3 className="font-bold font-display text-white group-hover:text-violet-400 transition-colors truncate">{faq.q}</h3>
+                  <h3 className={`font-bold font-display ${isDark ? 'text-white' : 'text-slate-900'} group-hover:text-violet-400 transition-colors truncate`}>{faq.q}</h3>
                   <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-violet-400 transition-colors" />
                 </div>
                 <p className="text-slate-400 text-sm font-light leading-relaxed">{faq.a}</p>
@@ -879,7 +880,7 @@ export default function LandingPage() {
             </button>
             <a
               href="#pricing"
-              className="px-10 py-5 rounded-2xl border border-white/[0.1] bg-white/[0.02] text-white font-bold text-lg hover:bg-white/[0.05] hover:-translate-y-1 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
+              className={`px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-300 flex items-center gap-2.5 group cursor-pointer ${isDark ? 'border border-white/[0.1] bg-white/[0.02] text-white hover:bg-white/[0.05]' : 'border border-slate-300 bg-slate-100 text-slate-900 hover:bg-slate-200'}`}
             >
               <DollarSign className="w-5 h-5" /> View Pricing
             </a>
