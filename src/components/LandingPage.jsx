@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext.jsx';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -22,6 +23,8 @@ import {
   ArrowRight,
   CheckCircle2,
   Sparkles,
+  Sun,
+  Moon,
   Cpu,
   Layers,
   Users
@@ -31,6 +34,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   useEffect(() => {
@@ -405,6 +409,13 @@ export default function LandingPage() {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.1] text-slate-300 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.2] transition-all duration-300"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
             <a
               href="#pricing"
               className="px-5 py-2.5 rounded-2xl border border-white/10 bg-white/5 text-sm font-semibold text-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
@@ -429,7 +440,14 @@ export default function LandingPage() {
 
         {mobileMenuOpen && (
           <div className="fixed inset-0 z-40 bg-[#0a0a0f]/95 backdrop-blur-2xl">
-            <div className="absolute top-6 right-6">
+            <div className="absolute top-6 right-6 flex items-center gap-2">
+              <button
+                onClick={toggleTheme}
+                title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                className="p-2 rounded-lg bg-white/[0.03] border border-white/10 text-white hover:bg-white/[0.05]"
+              >
+                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
               <button onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/[0.03] border border-white/10 text-white hover:bg-white/[0.05]">
                 <X className="w-5 h-5" />
               </button>

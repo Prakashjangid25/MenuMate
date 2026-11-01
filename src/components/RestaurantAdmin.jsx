@@ -1331,66 +1331,86 @@ export default function RestaurantAdmin() {
   // ═══════════════════════════════════════════════
   if (!user) {
     return (
-      <div className={`min-h-screen font-sans flex items-center justify-center p-4 ${isDark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-800'}`}>
+      <div className={`min-h-screen font-sans flex items-center justify-center p-4 relative overflow-hidden ${isDark ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-800'}`}>
+        {/* Animated background orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className={`absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full blur-[120px] ${isDark ? 'bg-fuchsia-600/20' : 'bg-fuchsia-400/20'}`} />
+          <div className={`absolute -bottom-40 -right-40 w-[600px] h-[600px] rounded-full blur-[140px] ${isDark ? 'bg-violet-600/20' : 'bg-violet-400/20'}`} />
+          <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[120px] ${isDark ? 'bg-cyan-600/10' : 'bg-cyan-400/10'}`} />
+        </div>
+
         {/* Theme toggle in corner */}
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 z-20">
           <ThemeToggle />
         </div>
 
-        <div className={`w-full max-w-md p-8 rounded-2xl border shadow-2xl animate-fade-in ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200/80'}`}>
-          <div className="flex justify-between items-center mb-6">
-            <span className="text-fuchsia-600 text-xs font-semibold uppercase tracking-widest bg-fuchsia-500/10 px-2.5 py-1 rounded">
-              Restaurant Admin Gate
-            </span>
-            <button onClick={() => navigate('/')} className={`text-xs flex items-center gap-1 ${isDark ? 'text-slate-400 hover:text-white' : 'text-slate-400 hover:text-slate-800'}`}>
-              <FiHome /> Back
-            </button>
+        {/* Back to home */}
+        <button onClick={() => navigate('/')} className={`absolute top-4 left-4 z-20 text-xs flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all ${isDark ? 'text-slate-400 hover:text-white bg-slate-900/50 hover:bg-slate-800 border border-slate-800' : 'text-slate-500 hover:text-slate-900 bg-white/70 hover:bg-white border border-slate-200'}`}>
+          <FiHome /> Back to Home
+        </button>
+
+        <div className={`relative w-full max-w-md animate-fade-in`}>
+          {/* Glow behind card */}
+          <div className="absolute inset-0 -m-4 bg-gradient-to-br from-fuchsia-500/20 via-violet-500/10 to-transparent blur-2xl rounded-3xl pointer-events-none" />
+
+          <div className={`relative p-8 md:p-10 rounded-3xl border shadow-2xl backdrop-blur-xl ${isDark ? 'bg-slate-900/80 border-slate-800/80' : 'bg-white/80 border-slate-200/80'}`}>
+            {/* Header */}
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-fuchsia-500/30">
+                <FiLock className="text-white text-lg" />
+              </div>
+              <div>
+                <span className="text-fuchsia-500 text-[10px] font-bold uppercase tracking-widest">
+                  Restaurant Admin Gate
+                </span>
+                <h2 className={`text-2xl font-bold font-display tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  Sign in to Storefront
+                </h2>
+              </div>
+            </div>
+
+            <p className={`text-sm font-light mb-8 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+              Enter the credentials provided by your Super Admin to manage this restaurant.
+            </p>
+
+            <form onSubmit={handleAuthSubmit} className="space-y-5">
+              <div>
+                <label className={labelCls}>Email Address</label>
+                <div className="relative">
+                  <FiMail className={`absolute left-4 top-1/2 -translate-y-1/2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`} />
+                  <input
+                    type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                    placeholder="manager@restaurant.com"
+                    className={`w-full border rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-500/20 transition-all ${isDark ? 'bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-600' : 'bg-slate-50 border-slate-200 text-slate-800 placeholder:text-slate-400'}`}
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <label className={labelCls}>Password</label>
+                <div className="relative">
+                  <FiLock className={`absolute left-4 top-1/2 -translate-y-1/2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`} />
+                  <input
+                    type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className={`w-full border rounded-2xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-500/20 transition-all ${isDark ? 'bg-slate-950/60 border-slate-800 text-white placeholder:text-slate-600' : 'bg-slate-50 border-slate-200 text-slate-800 placeholder:text-slate-400'}`}
+                    required
+                  />
+                </div>
+                {authError && <p className="text-xs text-pink-500 mt-2 flex items-center gap-1.5"><FiAlertTriangle /> {authError}</p>}
+              </div>
+              <button
+                type="submit" disabled={authLoading}
+                className="w-full bg-gradient-to-r from-fuchsia-500 to-violet-600 hover:from-fuchsia-600 hover:to-violet-700 active:scale-[0.98] text-white font-bold py-4 rounded-2xl text-sm shadow-xl shadow-fuchsia-500/30 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {authLoading ? (<><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /><span>Signing in...</span></>) : (<>Sign In to Storefront <FiArrowRight className="w-4 h-4" /></>)}
+              </button>
+            </form>
+
+            <p className={`text-xs text-center mt-8 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+              Credentials are provided by the Super Admin when your restaurant is registered.
+            </p>
           </div>
-
-          <h2 className={`text-2xl font-bold font-display tracking-tight mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-            Sign in to Storefront
-          </h2>
-          <p className={`text-sm font-light mb-6 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-            Enter the credentials provided by your Super Admin to manage this restaurant.
-          </p>
-
-          <form onSubmit={handleAuthSubmit} className="space-y-4">
-            <div>
-              <label className={labelCls}>Email Address</label>
-              <div className="relative">
-                <FiMail className={`absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`} />
-                <input
-                  type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                  placeholder="manager@restaurant.com"
-                  className={`w-full border rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-fuchsia-500 ${isDark ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-50 border-slate-200 text-slate-800'}`}
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <label className={labelCls}>Password</label>
-              <div className="relative">
-                <FiLock className={`absolute left-3.5 top-3.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`} />
-                <input
-                  type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className={`w-full border rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-fuchsia-500 ${isDark ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-50 border-slate-200 text-slate-800'}`}
-                  required
-                />
-              </div>
-              {authError && <p className="text-xs text-pink-500 mt-2 flex items-center gap-1"><FiAlertTriangle /> {authError}</p>}
-            </div>
-            <button
-              type="submit" disabled={authLoading}
-              className="w-full bg-fuchsia-500 hover:bg-fuchsia-600 active:bg-fuchsia-700 text-white font-semibold py-3 rounded-xl text-sm shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              {authLoading ? (<><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /><span>Signing in...</span></>) : 'Sign In to Storefront'}
-            </button>
-          </form>
-
-          <p className={`text-xs text-center mt-6 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-            Credentials are provided by the Super Admin when your restaurant is registered.
-          </p>
         </div>
       </div>
     );
