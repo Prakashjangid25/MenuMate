@@ -3,107 +3,132 @@ import { useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
-  FiArrowRight,
-  FiCheck,
-  FiZap,
-  FiGrid,
-  FiClock,
-  FiDollarSign,
-  FiShoppingBag,
-  FiPrinter,
-  FiSmartphone,
-  FiBarChart2,
-  FiShield,
-  FiUsers,
-  FiStar,
-  FiChevronRight,
-  FiMenu,
-  FiX,
-  FiLogIn
-} from 'react-icons/fi';
+  Layout,
+  Zap,
+  Clock,
+  DollarSign,
+  Smartphone,
+  BarChart2,
+  Shield,
+  Star,
+  ChevronRight,
+  Menu,
+  X,
+  LogIn,
+  Printer,
+  ShoppingBag,
+  Phone,
+  Mail,
+  ArrowRight,
+  CheckCircle2,
+  Sparkles,
+  Cpu,
+  Layers,
+  Users
+} from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const heroRef = useRef(null);
-  const navRef = useRef(null);
-  const featuresRef = useRef(null);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   useEffect(() => {
-    // Hero animation
     const ctx = gsap.context(() => {
-      // Navbar fade in
-      gsap.from(navRef.current, {
-        y: -40,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-      });
-
-      // Hero title
-      gsap.from('.hero-title', {
-        y: 80,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power4.out',
-        delay: 0.3
-      });
-
-      gsap.from('.hero-subtitle', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.6
-      });
-
-      gsap.from('.hero-cta', {
-        y: 40,
+      // ── Navbar ──
+      gsap.from('.nav-item', {
+        y: -30,
         opacity: 0,
         duration: 0.8,
         ease: 'power3.out',
-        delay: 0.9,
-        stagger: 0.15
+        stagger: 0.08
       });
 
-      gsap.from('.hero-visual', {
-        x: 100,
+      // ── Hero ──
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+      tl.from('.hero-kicker', {
+        y: 40,
         opacity: 0,
-        duration: 1.4,
-        ease: 'power3.out',
-        delay: 0.5
+        duration: 1.2
+      })
+        .from('.hero-title-line', {
+          y: 60,
+          opacity: 0,
+          duration: 1.2,
+          stagger: 0.15
+        }, '-=0.8')
+        .from('.hero-subtitle', {
+          y: 40,
+          opacity: 0,
+          duration: 1
+        }, '-=0.6')
+        .from('.hero-cta-group', {
+          y: 40,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.2
+        }, '-=0.4')
+        .from('.hero-stats', {
+          y: 40,
+          opacity: 0,
+          duration: 0.9
+        }, '-=0.3');
+
+      // Floating elements
+      gsap.to('.float-1', {
+        y: -20,
+        x: 10,
+        rotation: 3,
+        duration: 6,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
       });
 
-      // Floating orbs parallax
-      gsap.to('.orb-1', {
-        y: -120,
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1
-        }
+      gsap.to('.float-2', {
+        y: 20,
+        x: -15,
+        rotation: -3,
+        duration: 7,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: 1
       });
 
-      gsap.to('.orb-2', {
-        y: -80,
-        x: 40,
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1.5
-        }
+      gsap.to('.float-3', {
+        y: -15,
+        x: 20,
+        rotation: 5,
+        duration: 5.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: 2
       });
 
-      // Feature cards scroll trigger
+      // ── Scroll-triggered sections ──
+      gsap.utils.toArray('.reveal-section').forEach((section) => {
+        gsap.from(section, {
+          opacity: 0,
+          y: 60,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 75%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+
+      // ── Feature cards ──
       gsap.utils.toArray('.feature-card').forEach((card, i) => {
         gsap.from(card, {
-          y: 80,
+          y: 60,
           opacity: 0,
-          duration: 0.8,
+          duration: 0.9,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: card,
@@ -114,29 +139,14 @@ export default function LandingPage() {
         });
       });
 
-      // Section headers
-      gsap.utils.toArray('.section-header').forEach((header) => {
-        gsap.from(header, {
-          y: 60,
-          opacity: 0,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: header,
-            start: 'top 80%',
-            toggleActions: 'play none none none'
-          }
-        });
-      });
-
-      // Stats counter animation
-      gsap.utils.toArray('.stat-number').forEach((el) => {
+      // ── Stats ──
+      gsap.utils.toArray('.luxury-stat').forEach((el) => {
         const target = parseInt(el.dataset.target, 10);
-        gsap.fromTo(el, 
+        gsap.fromTo(el,
           { innerText: 0 },
           {
             innerText: target,
-            duration: 2,
+            duration: 2.5,
             ease: 'power2.out',
             snap: { innerText: 1 },
             scrollTrigger: {
@@ -148,32 +158,60 @@ export default function LandingPage() {
         );
       });
 
-      // How it works steps
+      // ── How it works steps ──
       gsap.utils.toArray('.step-card').forEach((step, i) => {
         gsap.from(step, {
-          x: i % 2 === 0 ? -80 : 80,
+          x: i % 2 === 0 ? -60 : 60,
           opacity: 0,
           duration: 0.9,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: step,
-            start: 'top 80%',
+            start: 'top 82%',
             toggleActions: 'play none none none'
           }
         });
       });
 
-      // Parallax section backgrounds
-      gsap.utils.toArray('.parallax-bg').forEach((bg) => {
-        gsap.to(bg, {
-          yPercent: -20,
+      // ── Pricing cards ──
+      gsap.utils.toArray('.pricing-card').forEach((card, i) => {
+        gsap.from(card, {
+          y: 80,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          },
+          delay: i * 0.15
+        });
+      });
+
+      // ── Parallax backgrounds ──
+      gsap.utils.toArray('.parallax').forEach((el) => {
+        gsap.to(el, {
+          yPercent: -30,
           ease: 'none',
           scrollTrigger: {
-            trigger: bg.parentElement,
+            trigger: el.parentElement,
             start: 'top bottom',
             end: 'bottom top',
             scrub: true
           }
+        });
+      });
+
+      // ── Glow follow mouse ──
+      document.addEventListener('mousemove', (e) => {
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        gsap.to('.cursor-glow', {
+          x: x * 100 - 300,
+          y: y * 100 - 300,
+          duration: 1.5,
+          ease: 'power3.out'
         });
       });
     });
@@ -181,110 +219,184 @@ export default function LandingPage() {
     return () => ctx.revert();
   }, []);
 
+  // ── Data ──
   const features = [
     {
-      icon: <FiSmartphone className="text-2xl" />,
-      title: 'QR Code Ordering',
-      desc: 'Contactless dining experience. Customers scan table QR and order instantly from their phone.',
-      gradient: 'from-violet-500 to-fuchsia-500'
+      icon: <Smartphone className="w-6 h-6" />,
+      title: 'Contactless QR Ordering',
+      desc: 'Customers scan table QR codes with their phones — no apps, no downloads. Instant access to your digital menu.',
+      gradient: 'from-violet-500 to-fuchsia-500',
+      iconBg: 'bg-violet-500/10'
     },
     {
-      icon: <FiClock className="text-2xl" />,
-      title: 'Kitchen Display System (KDS)',
-      desc: 'Real-time order tracking for kitchen staff. Timers, acoustic alerts, and chef notes.',
-      gradient: 'from-cyan-500 to-blue-500'
+      icon: <Cpu className="w-6 h-6" />,
+      title: 'Kitchen Display System',
+      desc: 'Real-time kitchen dashboard with prep timers, acoustic alerts, and chef notes. Orders flow from table to kitchen instantly.',
+      gradient: 'from-cyan-500 to-blue-500',
+      iconBg: 'bg-cyan-500/10'
     },
     {
-      icon: <FiDollarSign className="text-2xl" />,
-      title: 'Smart Billing & Invoicing',
-      desc: 'Generate professional bills, thermal receipts, PDF invoices, and send via WhatsApp.',
-      gradient: 'from-amber-500 to-orange-500'
+      icon: <Printer className="w-6 h-6" />,
+      title: 'Smart Billing & PDF',
+      desc: 'Generate professional tax invoices, thermal receipts, and send bills via WhatsApp. GST and service charge support.',
+      gradient: 'from-amber-500 to-orange-500',
+      iconBg: 'bg-amber-500/10'
     },
     {
-      icon: <FiPrinter className="text-2xl" />,
-      title: 'Premium QR Stand Printing',
-      desc: 'Customizable table tents with 4 templates, brand colors, and high-res PNG/PDF export.',
-      gradient: 'from-emerald-500 to-teal-500'
+      icon: <Layers className="w-6 h-6" />,
+      title: 'Table Management',
+      desc: 'Create unlimited tables, design premium QR tent cards, download PNG/PDF, and track table-wise orders in real-time.',
+      gradient: 'from-emerald-500 to-teal-500',
+      iconBg: 'bg-emerald-500/10'
     },
     {
-      icon: <FiBarChart2 className="text-2xl" />,
-      title: 'SaaS Analytics Dashboard',
-      desc: 'Track revenue, subscriptions, MRR, and platform-wide metrics in real-time.',
-      gradient: 'from-pink-500 to-rose-500'
+      icon: <BarChart2 className="w-6 h-6" />,
+      title: 'SaaS Analytics',
+      desc: 'Track MRR, subscriptions, active restaurants, and revenue. Full dashboard for platform owners and restaurant admins.',
+      gradient: 'from-pink-500 to-rose-500',
+      iconBg: 'bg-pink-500/10'
     },
     {
-      icon: <FiShield className="text-2xl" />,
+      icon: <Shield className="w-6 h-6" />,
       title: 'Multi-Tenant Security',
-      desc: 'Each restaurant isolated with role-based access. Super Admin, Restaurant Admin, Kitchen.',
-      gradient: 'from-indigo-500 to-violet-500'
+      desc: 'Complete data isolation per restaurant. Role-based access for Super Admin, Restaurant Admin, Kitchen staff, and Customers.',
+      gradient: 'from-indigo-500 to-violet-500',
+      iconBg: 'bg-indigo-500/10'
     }
   ];
 
   const steps = [
-    { num: '01', title: 'Scan QR Code', desc: 'Customer scans the table QR code with their smartphone camera.' },
-    { num: '02', title: 'Browse & Order', desc: 'Explore the digital menu, add items to cart, apply coupons.' },
-    { num: '03', title: 'Kitchen Receives', desc: 'Order instantly appears on the Kitchen Display System.' },
-    { num: '04', title: 'Track Live', desc: 'Customer watches real-time order status: preparing → ready → served.' },
-    { num: '05', title: 'Smart Billing', desc: 'Generate bill, print receipt, or send PDF via WhatsApp.' }
+    { num: '01', title: 'Scan QR', desc: 'Customer scans table QR with smartphone camera.' },
+    { num: '02', title: 'Browse Menu', desc: 'View digital menu, add items to cart, apply coupons.' },
+    { num: '03', title: 'Kitchen Prep', desc: 'Order appears instantly on Kitchen Display System.' },
+    { num: '04', title: 'Live Track', desc: 'Customer watches status: preparing → ready → served.' },
+    { num: '05', title: 'Smart Bill', desc: 'Generate PDF receipt, print, or send via WhatsApp.' }
   ];
 
   const stats = [
-    { value: 50, suffix: '+', label: 'Restaurants' },
-    { value: 10, suffix: 'K+', label: 'Orders Processed' },
+    { value: 500, suffix: '+', label: 'Restaurants Live' },
+    { value: 25, suffix: 'K+', label: 'Orders Daily' },
     { value: 99, suffix: '%', label: 'Uptime' },
     { value: 24, suffix: '/7', label: 'Support' }
   ];
 
+  const pricing = [
+    {
+      name: 'Standard Bistro',
+      price: '1,999',
+      period: '/month',
+      desc: 'Perfect for single outlet restaurants getting started with digital ordering.',
+      features: ['Digital QR Menu', 'Kitchen Display (KDS)', 'Staff Accounts', 'Basic Analytics', 'Table Management'],
+      gradient: 'from-violet-500 to-fuchsia-500',
+      popular: false
+    },
+    {
+      name: 'Enterprise Dine',
+      price: '4,999',
+      period: '/month',
+      desc: 'Advanced platform for multi-outlet restaurant chains with full SaaS control.',
+      features: ['Multiple Outlets', 'Advance KDS', 'Promo & Coupons', 'Tax Configuration', 'Custom Branding', 'Priority Support'],
+      gradient: 'from-fuchsia-500 to-cyan-500',
+      popular: true
+    }
+  ];
+
+  const faqs = [
+    { q: 'Do I need technical knowledge to setup?', a: 'No. MenuMate is plug-and-play. Deploy your restaurant, generate QR codes, and start taking orders in minutes.' },
+    { q: 'Can I use my own domain?', a: 'Yes. Connect your custom domain and brand MenuMate as your own ordering platform.' },
+    { q: 'Is customer data secure?', a: 'Absolutely. All data is encrypted and isolated per restaurant using Firebase Firestore with role-based access.' },
+    { q: 'Do you support offline mode?', a: 'MenuMate works online for real-time order sync. Kitchen displays update instantly as orders come in.' }
+  ];
+
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a0a0f] text-white font-sans overflow-x-hidden selection:bg-violet-500/30 selection:text-white">
+      {/* ── Cursor Glow ── */}
+      <div className="fixed top-0 left-0 z-[-1] w-[600px] h-[600px] rounded-full bg-violet-500/10 blur-[120px] pointer-events-none cursor-glow" />
+
       {/* ── NAVBAR ── */}
-      <nav ref={navRef} className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/30">
-              <FiGrid className="text-white text-lg" />
+          <div className="flex items-center gap-3 cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => navigate('/')}>
+            <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-500/40 group-hover:shadow-violet-500/60 transition-shadow duration-300">
+              <Layout className="text-white text-lg" />
             </div>
-            <span className="font-display font-bold text-xl tracking-tight">MenuMate</span>
+            <span className="font-display font-bold text-xl tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-violet-300 to-fuchsia-300">MenuMate</span>
           </div>
 
-          {/* Desktop nav */}
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-sm text-slate-300 hover:text-white transition-colors">Features</a>
-            <a href="#how-it-works" className="text-sm text-slate-300 hover:text-white transition-colors">How It Works</a>
-            <a href="#booking" className="text-sm text-slate-300 hover:text-white transition-colors">Table Booking</a>
-            <a href="#pricing" className="text-sm text-slate-300 hover:text-white transition-colors">Pricing</a>
+            {[
+              { label: 'Features', href: '#features' },
+              { label: 'How It Works', href: '#how-it-works' },
+              { label: 'Table Booking', href: '#booking' },
+              { label: 'Pricing', href: '#pricing' },
+              { label: 'FAQ', href: '#faq' }
+            ].map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className={`nav-item text-sm font-medium text-slate-400 hover:text-white transition-colors duration-300 relative group`}
+              >
+                <span className="absolute -bottom-[3px] left-0 right-0 h-[2px] bg-gradient-to-r from-violet-500 to-fuchsia-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                {item.label}
+              </a>
+            ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-4">
+            <a
+              href="#pricing"
+              className="px-5 py-2.5 rounded-2xl border border-white/10 bg-white/5 text-sm font-semibold text-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
+            >
+              <Zap className="w-4 h-4 text-violet-400" /> Get Started
+            </a>
             <button
               onClick={() => navigate('/admin')}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-sm font-semibold shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all flex items-center gap-2 cursor-pointer"
+              className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white text-sm font-semibold shadow-xl shadow-violet-500/30 hover:shadow-violet-500/50 hover:scale-105 transition-all duration-300 flex items-center gap-2"
             >
-              <FiLogIn className="text-sm" /> Sign In
+              <LogIn className="w-4 h-4" /> Admin Sign In
             </button>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg bg-white/5 text-white"
+            className="md:hidden p-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-white hover:bg-white/[0.05] transition-all"
           >
-            {mobileMenuOpen ? <FiX /> : <FiMenu />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile Menu Overlay */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-4 p-4 rounded-2xl bg-slate-900/95 backdrop-blur border border-white/10">
-            <div className="flex flex-col gap-3">
-              <a href="#features" className="text-sm text-slate-300 py-2" onClick={() => setMobileMenuOpen(false)}>Features</a>
-              <a href="#how-it-works" className="text-sm text-slate-300 py-2" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
-              <a href="#booking" className="text-sm text-slate-300 py-2" onClick={() => setMobileMenuOpen(false)}>Table Booking</a>
+          <div className="fixed inset-0 z-40 bg-[#0a0a0f]/95 backdrop-blur-2xl">
+            <div className="absolute top-6 right-6">
+              <button onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-lg bg-white/[0.03] border border-white/10 text-white hover:bg-white/[0.05]">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="mt-20 px-6 space-y-6">
+              {[
+                { label: 'Features', href: '#features' },
+                { label: 'How It Works', href: '#how-it-works' },
+                { label: 'Table Booking', href: '#booking' },
+                { label: 'Pricing', href: '#pricing' },
+                { label: 'FAQ', href: '#faq' }
+              ].map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-lg font-medium text-slate-300 hover:text-white transition-colors block py-3"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
               <button
                 onClick={() => { setMobileMenuOpen(false); navigate('/admin'); }}
-                className="w-full mt-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-sm font-semibold flex items-center justify-center gap-2"
+                className="w-full px-6 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-center text-white font-bold text-lg hover:scale-105 transition-all duration-300 shadow-lg shadow-violet-500/30"
               >
-                <FiLogIn /> Sign In
+                Admin Sign In
               </button>
             </div>
           </div>
@@ -292,106 +404,158 @@ export default function LandingPage() {
       </nav>
 
       {/* ── HERO ── */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
-        {/* Background orbs */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="orb-1 absolute top-20 left-10 w-72 h-72 rounded-full bg-violet-600/20 blur-[120px]" />
-          <div className="orb-2 absolute bottom-20 right-10 w-96 h-96 rounded-full bg-fuchsia-600/15 blur-[140px]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-cyan-600/10 blur-[160px]" />
+      <section className="relative min-h-screen flex flex-col justify-center pt-20 pb-16 px-6 overflow-hidden">
+        {/* Background Glows */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="float-1 absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-violet-600/20 blur-[160px] pointer-events-none" />
+          <div className="float-2 absolute bottom-[-10%] right-[-10%] w-[700px] h-[700px] rounded-full bg-fuchsia-600/15 blur-[180px] pointer-events-none" />
+          <div className="float-3 absolute top-[40%] left-[30%] w-[400px] h-[400px] rounded-full bg-cyan-600/10 blur-[140px] pointer-events-none" />
         </div>
 
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-          backgroundSize: '60px 60px'
+        {/* Subtle Grid */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+          backgroundSize: '80px 80px'
         }} />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left content */}
-          <div>
-            <div className="hero-subtitle inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 text-sm font-medium mb-6">
-              <FiZap className="text-sm" />
-              Next-Generation Contactless Dining
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* Left Content */}
+          <div className="flex flex-col justify-center">
+            <div className="hero-kicker inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-violet-500/[0.08] border border-violet-500/[0.2] text-violet-400 text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-sm">
+              <Zap className="w-3.5 h-3.5" />
+              Premium Restaurant SaaS Platform
             </div>
 
-            <h1 className="hero-title text-5xl md:text-7xl font-extrabold font-display tracking-tight leading-[1.05] mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400">
-                The Future of
+            <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl font-extrabord font-display tracking-tight leading-[1.05] mb-8">
+              <span className="block hero-title-line text-transparent bg-clip-text bg-gradient-to-r from-white via-violet-400 to-fuchsia-400">
+                Elevate Your Restaurant
               </span>
-              <br />
-              <span className="text-white">Restaurant Dining</span>
+              <span className="block hero-title-line text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-cyan-400 to-blue-400">
+                To The Future
+              </span>
+              <span className="block hero-title-line text-white">
+                Of Contactless Dining
+              </span>
             </h1>
 
-            <p className="hero-subtitle text-lg text-slate-400 font-light leading-relaxed mb-8 max-w-xl">
-              Transform your restaurant with a premium QR-based ordering system. 
-              Contactless menus, real-time kitchen displays, smart billing, and seamless table booking — all in one luxury platform.
+            <p className="hero-subtitle text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-10 max-w-[560px]">
+              A luxury QR-based ordering & management suite built for modern restaurants.
+              Contactless menus, real-time kitchen displays, smart billing, and elegant table booking — all in one platform.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="hero-cta-group flex flex-wrap gap-4">
               <button
                 onClick={() => navigate('/admin')}
-                className="hero-cta px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-bold text-base shadow-xl shadow-violet-500/30 hover:shadow-violet-500/50 transition-all flex items-center gap-2 cursor-pointer"
+                className="hero-cta px-8 py-4.5 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-lg shadow-2xl shadow-violet-500/40 hover:shadow-violet-500/60 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
               >
-                Get Started <FiArrowRight />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /> Start Free Trial
               </button>
               <a
                 href="#features"
-                className="hero-cta px-8 py-4 rounded-2xl border border-white/10 bg-white/5 text-white font-bold text-base hover:bg-white/10 transition-all flex items-center gap-2 cursor-pointer"
+                className="hero-cta px-8 py-4.5 rounded-2xl border border-white/10 bg-white/[0.03] text-white font-bold text-lg hover:bg-white/[0.05] hover:-translate-y-1 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
               >
-                Explore Features <FiChevronRight />
+                <Sparkles className="w-5 h-5" /> View Features
               </a>
             </div>
 
-            {/* Stats */}
-            <div className="mt-12 grid grid-cols-4 gap-6">
+            {/* Stats Row */}
+            <div className="hero-stats mt-16 flex items-end gap-8 border-t border-white/5 pt-8">
               {stats.map((stat, i) => (
                 <div key={i} className="text-center">
-                  <div className="text-2xl md:text-3xl font-extrabold font-mono text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
-                    <span className="stat-number" data-target={stat.value}>{stat.value}</span>{stat.suffix}
+                  <div className="text-3xl md:text-4xl font-extrabord font-mono text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
+                    <span className="luxury-stat" data-target={stat.value}>{stat.value}</span>{stat.suffix}
                   </div>
-                  <div className="text-xs text-slate-500 mt-1">{stat.label}</div>
+                  <div className="text-xs text-slate-500 mt-2 uppercase tracking-wider font-medium">{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right visual */}
-          <div className="hero-visual relative hidden lg:block">
-            <div className="relative w-full max-w-lg mx-auto">
-              {/* Phone mockup */}
-              <div className="relative mx-auto w-72 h-[580px] rounded-[3rem] border-4 border-slate-700 bg-slate-900 shadow-2xl shadow-violet-500/20 overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-2xl z-10" />
-                <div className="p-4 pt-8 h-full flex flex-col">
-                  <div className="text-center mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 mx-auto mb-2 flex items-center justify-center">
-                      <FiGrid className="text-white" />
+          {/* Right Visual - Premium Mobile Mockup */}
+          <div className="hero-visual relative flex items-center justify-center hidden lg:block">
+            {/* Background glow behind phone */}
+            <div className="absolute inset-0 w-[400px] h-[700px] bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20 rounded-full blur-[100px] mix-blend-screen" />
+
+            {/* Phone Mockup */}
+            <div className="relative z-10 mx-auto w-[290px] h-[620px] rounded-[3rem] border-[2px] border-white/10 bg-gradient-to-b from-slate-900 to-black shadow-2xl shadow-violet-500/20 overflow-hidden relative group">
+              {/* Phone notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-4 bg-slate-900 rounded-b-full z-20" />
+              {/* Status bar */}
+              <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-20 pointer-events-none">
+                <div className="flex gap-1.5 text-[10px] text-slate-400">
+                  <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '200ms' }} />
+                  <div className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" style={{ animationDelay: '400ms' }} />
+                </div>
+                <span className="text-[10px] font-medium text-slate-300">9:41</span>
+                <div className="flex gap-0.5 text-[10px] text-slate-400">
+                  <div className="w-1 h-4 bg-slate-600 rounded" />
+                  <div className="w-1 h-3.5 bg-slate-600 rounded" />
+                  <div className="w-1 h-3 bg-slate-600 rounded" />
+                </div>
+              </div>
+
+              {/* App Content */}
+              <div className="absolute inset-0 p-6 pt-16 overflow-hidden flex flex-col">
+                <div className="flex-1 space-y-4 overflow-y-auto no-scrollbar pr-2">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
+                      <Layout className="text-white text-sm" />
                     </div>
-                    <h3 className="font-bold text-sm">MenuMate</h3>
-                    <p className="text-[10px] text-slate-400">Table 4 • Garden View</p>
+                    <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">
+                      <ShoppingBag className="text-fuchsia-400 text-xs" />
+                    </div>
                   </div>
-                  <div className="flex-1 space-y-3 overflow-hidden">
-                    {['Truffle Fries', 'Pesto Pizza', 'Mint Mojito'].map((item, i) => (
-                      <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-                        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20" />
-                        <div className="flex-1">
-                          <div className="text-xs font-bold">{item}</div>
-                          <div className="text-[10px] text-slate-400">₹{249 + i * 100}</div>
+
+                  <div className="space-y-2">
+                    <h3 className="font-bold text-white text-sm tracking-tight">Gourmet Garden</h3>
+                    <p className="text-[11px] text-slate-400 line-clamp-2">Table 4 • Garden View</p>
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="space-y-3">
+                    {[
+                      { name: 'Truffle Parmesan Fries', price: '249', pop: true },
+                      { name: 'Pesto Mozzarella Pizza', price: '549', pop: true },
+                      { name: 'Molten Lava Cake', price: '299', pop: false },
+                      { name: 'Garden Mint Mojito', price: '189', pop: true }
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-colors group cursor-pointer">
+                        <div className="flex items-center gap-3 flex-1">
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center">
+                            <Star className="text-violet-400 text-xs fill-violet-400" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex justify-between items-baseline mb-0.5">
+                              <h4 className="font-semibold text-sm text-white truncate">{item.name}</h4>
+                              <span className="text-violet-400 font-mono text-xs font-bold">₹{item.price}</span>
+                            </div>
+                            <p className="text-[10px] text-slate-500 line-clamp-1">Artisanal preparation</p>
+                          </div>
                         </div>
-                        <div className="w-8 h-8 rounded-lg bg-violet-500/20 flex items-center justify-center text-violet-400 text-xs font-bold">+</div>
+                        <button className="w-7 h-7 rounded-full bg-violet-500/20 hover:bg-violet-500/30 flex items-center justify-center text-violet-400 text-xs transition-all group-hover:bg-violet-500 group-hover:text-white">
+                          <PlusIcon className="w-3 h-3" />
+                        </button>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-4 p-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-center text-sm font-bold">
-                    View Cart • ₹648
-                  </div>
                 </div>
-              </div>
-              {/* Floating elements */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center shadow-xl shadow-cyan-500/30 animate-bounce" style={{ animationDuration: '3s' }}>
-                <FiClock className="text-white text-2xl" />
-              </div>
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-xl shadow-amber-500/30 animate-bounce" style={{ animationDuration: '4s' }}>
-                <FiDollarSign className="text-white text-xl" />
+
+                {/* Bottom Cart */}
+                <div className="mt-4 p-4 rounded-2xl bg-white/[0.05] border border-white/[0.1]">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-bold text-white tracking-tight">Cart</span>
+                    <span className="text-xs font-bold text-fuchsia-400">3 items</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm text-slate-400 mb-3">
+                    <span>Subtotal</span>
+                    <span className="text-white font-bold">₹997</span>
+                  </div>
+                  <button className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-sm shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all">
+                    Checkout
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -399,33 +563,37 @@ export default function LandingPage() {
       </section>
 
       {/* ── FEATURES ── */}
-      <section id="features" className="relative py-24 px-6">
-        <div className="parallax-bg absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950" />
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="section-header text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/20 text-fuchsia-300 text-sm font-medium mb-4">
-              <FiStar /> Premium Features
+      <section id="features" className="py-24 px-6 relative overflow-hidden reveal-section">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="parallax absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-violet-900/20 via-transparent to-transparent -mt-[20%]" />
+        </div>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-fuchsia-500/[0.1] border border-fuchsia-500/[0.2] text-fuchsia-400 text-xs font-bold uppercase tracking-widest mb-6">
+              <Sparkles className="w-3 h-3" />
+              Premium Features
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight mb-4">
+            <h2 className="text-4xl md:text-5xl font-extrabord font-display tracking-tight mb-6">
               Everything Your Restaurant Needs
             </h2>
-            <p className="text-slate-400 font-light max-w-2xl mx-auto">
-              From QR ordering to kitchen displays, smart billing to table booking — 
-              MenuMate is the complete SaaS platform for modern dining.
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+              From QR ordering to kitchen displays, smart billing to table management —
+              MenuMate is the complete luxury platform for modern dining.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((f, i) => (
               <div
                 key={i}
-                className="feature-card group p-8 rounded-3xl bg-white/[0.03] border border-white/5 hover:border-white/10 transition-all duration-300 hover:-translate-y-1"
+                className={`feature-card group relative p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.1] hover:bg-white/[0.04] transition-all duration-500 hover:-translate-y-2`}
               >
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${f.gradient} flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                <div className={`w-14 h-14 rounded-2xl ${f.iconBg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-[0_0_40px_rgba(99,102,241,0.15)]`}>
                   {f.icon}
                 </div>
-                <h3 className="text-xl font-bold font-display mb-3">{f.title}</h3>
+                <h3 className="text-xl font-bold font-display mb-3 group-hover:text-white transition-colors">{f.title}</h3>
                 <p className="text-slate-400 text-sm font-light leading-relaxed">{f.desc}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-transparent to-white/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               </div>
             ))}
           </div>
@@ -433,35 +601,35 @@ export default function LandingPage() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section id="how-it-works" className="py-24 px-6 bg-slate-900/30">
+      <section id="how-it-works" className="py-24 px-6 bg-white/[0.01] reveal-section">
         <div className="max-w-5xl mx-auto">
-          <div className="section-header text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-sm font-medium mb-4">
-              <FiZap /> Seamless Flow
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/[0.1] border border-cyan-500/[0.2] text-cyan-400 text-xs font-bold uppercase tracking-widest mb-6">
+              <Zap className="w-3 h-3" />
+              Seamless Flow
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight mb-4">
-              How MenuMate Works
+            <h2 className="text-4xl md:text-5xl font-extrabord font-display tracking-tight mb-6">
+              From Scan To Serve
             </h2>
-            <p className="text-slate-400 font-light max-w-2xl mx-auto">
-              From scan to serve — a frictionless journey for customers and staff.
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+              A frictionless journey for customers and staff — built for luxury dining experiences.
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-8">
             {steps.map((step, i) => (
-              <div key={i} className="step-card flex items-center gap-6 p-6 rounded-2xl bg-white/[0.03] border border-white/5">
-                <div className="shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-extrabold text-xl font-mono shadow-lg shadow-violet-500/20">
+              <div
+                key={i}
+                className={`step-card group relative flex items-center gap-8 p-8 rounded-3xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500`}
+              >
+                <div className="shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-extrabord text-xl font-mono shadow-2xl shadow-violet-500/30 group-hover:scale-110 transition-transform duration-500">
                   {step.num}
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold font-display mb-1">{step.title}</h3>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold font-display mb-2 group-hover:text-white transition-colors">{step.title}</h3>
                   <p className="text-slate-400 text-sm font-light">{step.desc}</p>
                 </div>
-                {i < steps.length - 1 && (
-                  <div className="hidden md:block ml-auto">
-                    <FiChevronRight className="text-slate-600 text-2xl" />
-                  </div>
-                )}
+                <div className={`absolute -right-8 top-1/2 -translate-y-1/2 w-px h-[60px] bg-white/[0.05] ${i === steps.length - 1 ? 'hidden' : 'block'}`} />
               </div>
             ))}
           </div>
@@ -469,53 +637,54 @@ export default function LandingPage() {
       </section>
 
       {/* ── TABLE BOOKING ── */}
-      <section id="booking" className="py-24 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-violet-600/10 blur-[140px]" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-fuchsia-600/10 blur-[140px]" />
+      <section id="booking" className="py-24 px-6 relative overflow-hidden reveal-section">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="parallax absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-fuchsia-900/10 via-transparent to-transparent" />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className="section-header">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm font-medium mb-4">
-                <FiShoppingBag /> Table Booking
-              </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight mb-4">
-                Smart Table Management
-              </h2>
-              <p className="text-slate-400 font-light leading-relaxed mb-6">
-                Create tables, generate beautiful QR stand cards, and let customers book 
-                or scan instantly. Each table gets a unique QR code linking directly to 
-                your digital menu.
-              </p>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/[0.1] border border-emerald-500/[0.2] text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6">
+              <ShoppingBag className="w-3 h-3" />
+              Smart Table Management
             </div>
-            <ul className="space-y-3 mb-8">
+            <h2 className="text-4xl md:text-5xl font-extrabord font-display tracking-tight mb-6">
+              Premium Table Booking
+            </h2>
+            <p className="text-slate-400 text-lg leading-relaxed mb-10">
+              Create unlimited tables, design beautiful QR tent cards, and let customers 
+              scan instantly. Each table gets a unique QR code linking directly to your 
+              digital menu with real-time order sync.
+            </p>
+
+            <div className="space-y-4 mb-12">
               {[
-                'Create unlimited tables per restaurant',
-                'Generate premium QR stand cards (4 templates)',
-                'Download as PNG or PDF for printing',
+                'Unlimited tables per restaurant',
+                '4 premium QR card templates',
+                'Download PNG or PDF for printing',
                 'Custom brand colors & typography',
-                'Track table-wise orders in real-time'
+                'Track table-wise orders live',
+                'Auto-bill generation on checkout'
               ].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-slate-300">
-                  <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-                    <FiCheck className="text-emerald-400 text-xs" />
+                <div key={i} className="flex items-center gap-4">
+                  <div className="w-8 h-8 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-emerald-400">
+                    <CheckCircle2 className="w-4 h-4" />
                   </div>
-                  <span className="text-sm">{item}</span>
-                </li>
+                  <span className="text-slate-300 text-sm">{item}</span>
+                </div>
               ))}
-            </ul>
+            </div>
+
             <button
               onClick={() => navigate('/admin')}
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold text-base shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all flex items-center gap-2 cursor-pointer"
+              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold text-lg shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
             >
-              Manage Tables <FiArrowRight />
+              Manage Tables <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
 
-          {/* Visual */}
-          <div className="relative">
-            <div className="grid grid-cols-2 gap-4">
+          {/* Table Cards Visual */}
+          <div className="relative flex justify-center">
+            <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
               {[
                 { name: 'Table 1', sub: 'Garden View', color: 'from-violet-500 to-fuchsia-500' },
                 { name: 'Table 2', sub: 'Window Side', color: 'from-cyan-500 to-blue-500' },
@@ -524,15 +693,15 @@ export default function LandingPage() {
               ].map((t, i) => (
                 <div
                   key={i}
-                  className="p-6 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-white/10 transition-all"
+                  className={`p-6 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] transition-all duration-300 group`}
                 >
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${t.color} flex items-center justify-center mb-3 shadow-lg`}>
-                    <FiGrid className="text-white" />
+                  <div className={`w-12 h-12 rounded-2xl ${t.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <Layout className="text-white text-sm" />
                   </div>
-                  <h4 className="font-bold text-sm">{t.name}</h4>
-                  <p className="text-xs text-slate-400">{t.sub}</p>
-                  <div className="mt-3 flex items-center gap-1 text-[10px] text-emerald-400">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <h4 className="font-bold text-sm text-white">{t.name}</h4>
+                  <p className="text-[10px] text-slate-500 mt-1">{t.sub}</p>
+                  <div className="mt-4 flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Active
                   </div>
                 </div>
@@ -542,98 +711,61 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── KDS SHOWCASE ── */}
-      <section className="py-24 px-6 bg-slate-900/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="section-header text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-300 text-sm font-medium mb-4">
-              <FiClock /> Kitchen Display System
-            </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight mb-4">
-              Real-Time Kitchen Operations
-            </h2>
-            <p className="text-slate-400 font-light max-w-2xl mx-auto">
-              Orders appear instantly on the KDS. Track preparation, set timers, and never miss a ticket.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { title: 'Pending Orders', count: 5, color: 'from-amber-500 to-orange-500', status: 'Awaiting approval' },
-              { title: 'Preparing', count: 3, color: 'from-sky-500 to-blue-500', status: 'In kitchen' },
-              { title: 'Ready to Serve', count: 2, color: 'from-emerald-500 to-teal-500', status: 'Plating complete' }
-            ].map((kds, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-white/[0.03] border border-white/5 text-center">
-                <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${kds.color} flex items-center justify-center mx-auto mb-4 shadow-lg`}>
-                  <span className="text-3xl font-extrabold text-white font-mono">{kds.count}</span>
-                </div>
-                <h3 className="text-lg font-bold font-display mb-1">{kds.title}</h3>
-                <p className="text-sm text-slate-400">{kds.status}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── PRICING ── */}
-      <section id="pricing" className="py-24 px-6">
+      <section id="pricing" className="py-24 px-6 relative overflow-hidden reveal-section">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="parallax absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-900/10 via-transparent to-transparent" />
+        </div>
         <div className="max-w-5xl mx-auto">
-          <div className="section-header text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm font-medium mb-4">
-              <FiDollarSign /> Pricing
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/[0.1] border border-amber-500/[0.2] text-amber-400 text-xs font-bold uppercase tracking-widest mb-6">
+              <DollarSign className="w-3 h-3" />
+              Simple Pricing
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight mb-4">
-              Simple, Transparent Pricing
+            <h2 className="text-4xl md:text-5xl font-extrabord font-display tracking-tight mb-6">
+              Choose Your Plan
             </h2>
-            <p className="text-slate-400 font-light max-w-2xl mx-auto">
-              Choose the plan that fits your restaurant. No hidden fees.
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+              Transparent pricing for restaurants of all sizes. No hidden fees.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {[
-              {
-                name: 'Standard Bistro',
-                price: '1,999',
-                features: ['Digital QR Menu', 'Kitchen Display (KDS)', 'Staff Accounts', 'Basic Analytics', 'Table Management'],
-                gradient: 'from-violet-500 to-fuchsia-500',
-                popular: false
-              },
-              {
-                name: 'Enterprise Dine',
-                price: '4,999',
-                features: ['Multiple Outlets', 'Advance KDS', 'Promo & Coupons Engine', 'Tax Configuration', 'SaaS Custom Branding', 'Priority Support'],
-                gradient: 'from-fuchsia-500 to-cyan-500',
-                popular: true
-              }
-            ].map((plan, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {pricing.map((plan, i) => (
               <div
                 key={i}
-                className={`p-8 rounded-3xl border transition-all duration-300 ${plan.popular ? 'border-fuchsia-500/50 bg-fuchsia-500/[0.05] scale-105' : 'border-white/5 bg-white/[0.03]'}`}
+                className={`pricing-card relative p-10 rounded-3xl border transition-all duration-500 ${plan.popular
+                  ? 'border-fuchsia-500/50 bg-fuchsia-500/[0.03] scale-[1.02] shadow-2xl shadow-fuchsia-500/10'
+                  : 'border-white/[0.04] bg-white/[0.02] hover:border-white/[0.1] hover:-translate-y-2'
+                }`}
               >
                 {plan.popular && (
-                  <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-fuchsia-500/20 text-fuchsia-300 text-xs font-bold mb-4">
-                    <FiStar /> Most Popular
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-fuchsia-500 text-slate-900 text-xs font-bold uppercase tracking-widest shadow-lg shadow-fuchsia-500/40">
+                    <Star className="w-3 h-3 fill-yellow-400" /> Most Popular
                   </div>
                 )}
                 <h3 className="text-xl font-bold font-display mb-2">{plan.name}</h3>
-                <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-4xl font-extrabold font-mono">₹{plan.price}</span>
-                  <span className="text-slate-400 text-sm">/month</span>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span className="text-4xl md:text-5xl font-extrabord font-mono text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">{plan.price}</span>
+                  <span className="text-slate-500 text-sm">{plan.period}</span>
                 </div>
-                <ul className="space-y-3 mb-8">
+                <p className="text-sm text-slate-400 font-light mb-8">{plan.desc}</p>
+                <ul className="space-y-3 mb-10">
                   {plan.features.map((f, j) => (
                     <li key={j} className="flex items-center gap-3 text-sm text-slate-300">
-                      <FiCheck className="text-emerald-400 shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                       {f}
                     </li>
                   ))}
                 </ul>
                 <button
                   onClick={() => navigate('/admin')}
-                  className={`w-full py-3 rounded-xl font-bold text-sm transition-all cursor-pointer ${plan.popular ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white shadow-lg shadow-fuchsia-500/30' : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'}`}
+                  className={`w-full py-4 rounded-2xl font-bold text-lg transition-all duration-300 cursor-pointer group ${plan.popular
+                    ? 'bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white shadow-lg shadow-fuchsia-500/30 hover:shadow-fuchsia-500/50'
+                    : 'bg-white/[0.03] border border-white/[0.05] text-white hover:bg-white/[0.05]'
+                  }`}
                 >
-                  Get Started
+                  Get Started <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform inline ml-1" />
                 </button>
               </div>
             ))}
@@ -641,53 +773,117 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── FAQ ── */}
+      <section id="faq" className="py-24 px-6 bg-white/[0.01] reveal-section">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/[0.1] border border-pink-500/[0.2] text-pink-400 text-xs font-bold uppercase tracking-widest mb-6">
+              <Phone className="w-3 h-3" />
+              Frequently Asked
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabord font-display tracking-tight mb-6">
+              Everything You Need To Know
+            </h2>
+            <p className="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
+              Got questions? We have answers.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, i) => (
+              <div key={i} className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all duration-300 group">
+                <div className="flex justify-between items-center mb-3 cursor-pointer">
+                  <h3 className="font-bold font-display text-white group-hover:text-violet-400 transition-colors">{faq.q}</h3>
+                  <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-violet-400 transition-colors" />
+                </div>
+                <p className="text-slate-400 text-sm font-light leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA ── */}
-      <section className="py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center p-12 rounded-3xl bg-gradient-to-br from-violet-600/20 via-fuchsia-600/20 to-cyan-600/20 border border-white/10">
-          <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight mb-4">
-            Ready to Transform Your Restaurant?
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="parallax absolute inset-0 bg-gradient-to-br from-violet-900/30 via-transparent to-transparent" />
+        </div>
+        <div className="relative z-10 max-w-4xl mx-auto text-center p-16 rounded-[3rem] bg-gradient-to-br from-violet-900/20 via-fuchsia-900/20 to-transparent border border-white/[0.05] backdrop-blur-xl">
+          <h2 className="text-4xl md:text-5xl font-extrabord font-display tracking-tight mb-6">
+            Ready To Transform Your Restaurant?
           </h2>
-          <p className="text-slate-400 font-light mb-8 max-w-xl mx-auto">
+          <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
             Join hundreds of restaurants already using MenuMate to deliver 
-            exceptional dining experiences.
+            exceptional contactless dining experiences.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={() => navigate('/admin')}
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-bold text-base shadow-xl shadow-violet-500/30 hover:shadow-violet-500/50 transition-all flex items-center gap-2 cursor-pointer"
+              className="px-10 py-5 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold text-lg shadow-2xl shadow-violet-500/40 hover:shadow-violet-500/60 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
             >
-              Start Free Trial <FiArrowRight />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /> Start Free Trial
             </button>
-            <button
-              onClick={() => navigate('/support')}
-              className="px-8 py-4 rounded-2xl border border-white/10 bg-white/5 text-white font-bold text-base hover:bg-white/10 transition-all flex items-center gap-2 cursor-pointer"
+            <a
+              href="#pricing"
+              className="px-10 py-5 rounded-2xl border border-white/[0.1] bg-white/[0.02] text-white font-bold text-lg hover:bg-white/[0.05] hover:-translate-y-1 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
             >
-              Contact Sales <FiChevronRight />
-            </button>
+              <DollarSign className="w-5 h-5" /> View Pricing
+            </a>
           </div>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="py-12 px-6 border-t border-white/5">
+      <footer className="py-16 px-6 border-t border-white/[0.05]">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
-                <FiGrid className="text-white text-sm" />
+              <div className="w-8 h-8 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
+                <Layout className="text-white text-sm" />
               </div>
-              <span className="font-display font-bold">MenuMate</span>
+              <span className="font-display font-bold text-lg tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-violet-300 to-fuchsia-300">MenuMate</span>
             </div>
-            <div className="flex items-center gap-6 text-sm text-slate-400">
-              <a href="#features" className="hover:text-white transition-colors">Features</a>
-              <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
-              <a href="#booking" className="hover:text-white transition-colors">Table Booking</a>
-              <button onClick={() => navigate('/support')} className="hover:text-white transition-colors cursor-pointer">Support</button>
+            <div className="flex items-center gap-8 text-sm text-slate-400">
+              {[
+                { label: 'Features', href: '#features' },
+                { label: 'Pricing', href: '#pricing' },
+                { label: 'Table Booking', href: '#booking' },
+                { label: 'FAQ', href: '#faq' },
+                { label: 'Support', href: '/support' }
+              ].map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="hover:text-white transition-colors duration-300"
+                >
+                  {item.label}
+                </a>
+              ))}
             </div>
-            <p className="text-xs text-slate-500">© 2026 MenuMate SaaS. All rights reserved.</p>
+            <div className="flex gap-4">
+              {[
+                { icon: <Mail className="w-5 h-5 text-slate-400 hover:text-white transition-colors" />, href: 'mailto:support@menumate.in' },
+                { icon: <Phone className="w-5 h-5 text-slate-400 hover:text-white transition-colors" />, href: 'tel:+919876543210' }
+              ].map((contact) => (
+                <a key={contact.href} href={contact.href} className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.05] transition-all">
+                  {contact.icon}
+                </a>
+              ))}
+            </div>
+            <p className="text-xs text-slate-600 mt-6 md:mt-0">© 2026 MenuMate SaaS. All rights reserved.</p>
           </div>
         </div>
       </footer>
     </div>
+  );
+}
+
+// ── Helper Icons ──
+function PlusIcon({ className = '', ...props }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </svg>
   );
 }
